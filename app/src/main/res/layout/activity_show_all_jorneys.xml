@@ -8,14 +8,10 @@
     android:orientation="vertical"
     tools:context=".journey.ShowAllJourneysActivity">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -40,16 +36,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/cardView"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent">
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        android:layout_weight="1">
+        <!-- RecyclerView content goes here -->
     </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
