@@ -3,7 +3,7 @@ package com.example.haffa
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.haffa.journey.ShowAllJourneysActivity
+import com.example.haffa.journey.activity.ShowAllJourneysActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

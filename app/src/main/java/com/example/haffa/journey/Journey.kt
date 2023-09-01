@@ -1,4 +1,12 @@
-package com.example.haffa.journey
+package com.example.haffa.journey.model
 
-class Journey {
-}
+
+import java.util.Date
+
+data class Journey
+    (var distance : Double,
+     var route : String,
+     var points : Int,
+     var duration : Double,
+     var imgUrl : String,
+     var date: Date)
