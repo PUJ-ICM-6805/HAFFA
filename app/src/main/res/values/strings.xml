@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">HAFFA</string>
+    <string name="grupos">Grupos</string>
+    <string name="trayectos">Trayectos</string>
+    <string name="home">Home</string>
+    <string name="puntos">Puntos</string>
+    <string name="perfil">Perfil</string>
 </resources>

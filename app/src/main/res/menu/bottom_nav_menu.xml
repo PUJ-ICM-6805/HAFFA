@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/grupos"
+        android:icon="@drawable/btn_nav_groups"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/trayectos"
+        android:icon="@drawable/btn_nav_ubication"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/home"
+        android:icon="@drawable/btn_nav_home"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/puntos"
+        android:icon="@drawable/btn_nav_prize"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="@string/perfil"
+        android:icon="@drawable/btn_nav_profile"/>
+</menu>
