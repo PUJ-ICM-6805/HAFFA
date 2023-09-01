@@ -7,6 +7,10 @@ android {
     namespace = "com.example.haffa"
     compileSdk = 33
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.haffa"
         minSdk = 33

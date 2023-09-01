@@ -13,6 +13,15 @@
         android:theme="@style/Theme.HAFFA"
         tools:targetApi="31">
         <activity
+            android:name=".journey.ShowJourneyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".journey.ShowAllJourneysActivity"
+            android:exported="false" />
+        <activity
+            android:name=".journey.RegisterJourneyActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
