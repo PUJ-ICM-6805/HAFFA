@@ -18,8 +18,12 @@
             android:name=".main.HomePageActivity"
             android:exported="false" />
         <activity
+            android:name=".main.RegistryActivity"
+            android:exported="false" />
+        <activity
             android:name=".journey.ShowJourneyActivity"
             android:exported="false" />
+
         <activity
             android:name=".journey.ShowAllJourneysActivity"
             android:exported="false" />
