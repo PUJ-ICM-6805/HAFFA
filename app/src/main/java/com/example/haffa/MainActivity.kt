@@ -1,21 +1,17 @@
 package com.example.haffa
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.haffa.journey.activity.ShowAllJourneysActivity
+import androidx.appcompat.app.AppCompatActivity
+import com.example.haffa.main.HomePageActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-<<<<<<< HEAD
-        setContentView(R.layout.home_main)
-=======
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_home_main)
 
-        //Test
-        val intent = Intent(this, ShowAllJourneysActivity::class.java)
+        val intent = Intent(this, HomePageActivity::class.java)
         startActivity(intent)
->>>>>>> refs/remotes/origin/main
+
     }
 }

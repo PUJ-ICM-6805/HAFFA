@@ -1,11 +1,9 @@
-package com.example.haffa.journey.activity
+package com.example.haffa.journey
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haffa.databinding.ActivityShowAllJorneysBinding
-import com.example.haffa.journey.adapter.JourneyAdapter
-import com.example.haffa.journey.model.Journey
 import java.util.Date
 
 

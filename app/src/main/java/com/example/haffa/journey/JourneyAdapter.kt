@@ -1,4 +1,4 @@
-package com.example.haffa.journey.adapter
+package com.example.haffa.journey
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,10 +6,8 @@ import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.haffa.databinding.JourneyCardLayoutBinding
-
 import com.bumptech.glide.Glide
-import com.example.haffa.journey.model.Journey
+import com.example.haffa.databinding.JourneyCardLayoutBinding
 import java.util.Locale
 
 class JourneyAdapter(private val context: Context, private val journeys: List<Journey>) : RecyclerView.Adapter<JourneyAdapter.ViewHolder>() {

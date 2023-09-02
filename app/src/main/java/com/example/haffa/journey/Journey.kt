@@ -1,4 +1,4 @@
-package com.example.haffa.journey.model
+package com.example.haffa.journey
 
 
 import java.util.Date
