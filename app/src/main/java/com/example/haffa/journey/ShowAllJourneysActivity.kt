@@ -1,5 +1,6 @@
 package com.example.haffa.journey
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +26,12 @@ class ShowAllJourneysActivity : AppCompatActivity() {
 
         journeyAdapter = JourneyAdapter(this, sampleData())
         recyclerView.adapter = journeyAdapter
+
+        binding.registerJourneyButton.setOnClickListener {
+            val intent = Intent(this,
+                RegisterJourneyActivity::class.java)
+            startActivity(intent)
+        }
     }
 
 
