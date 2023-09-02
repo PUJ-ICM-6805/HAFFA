@@ -5,4 +5,9 @@
     <string name="home">Home</string>
     <string name="puntos">Puntos</string>
     <string name="perfil">Perfil</string>
+    <string name="name">Nombre</string>
+    <string name="distance">Distancia</string>
+    <string name="altitude">Altura</string>
+    <string name="points">Puntos obtenidos</string>
+    <string name="duration">Duración</string>
 </resources>
