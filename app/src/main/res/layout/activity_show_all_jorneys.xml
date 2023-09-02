@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/flag"
+            android:src="@drawable/flag1"
             android:background="@color/white"/>
 
         <ImageButton
@@ -26,7 +26,7 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
-            android:src="@drawable/binoculars"
+            android:src="@drawable/binoculars1"
             android:background="@color/white"/>
 
     </LinearLayout>

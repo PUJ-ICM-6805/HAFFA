@@ -10,4 +10,5 @@
     <string name="altitude">Altura</string>
     <string name="points">Puntos obtenidos</string>
     <string name="duration">Duración</string>
+    <string name="startJourney">Iniciar trayecto</string>
 </resources>

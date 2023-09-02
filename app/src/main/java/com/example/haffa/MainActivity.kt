@@ -6,6 +6,7 @@ import com.example.haffa.databinding.ActivityHomeLoginBinding
 import com.example.haffa.main.HomePageActivity
 import com.example.haffa.main.RegistryActivity
 import android.os.Bundle
+import com.example.haffa.journey.RegisterJourneyActivity
 import com.example.haffa.journey.ShowAllJourneysActivity
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        /*
         binding.logIn.setOnClickListener(){
             val intent = Intent(this, HomePageActivity::class.java)
             startActivity(intent)
@@ -26,7 +29,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //val intent = Intent(this, HomePageActivity::class.java)
-        //startActivity(intent)
+         */
+
+        val intent = Intent(this,
+            RegisterJourneyActivity::class.java)
+        startActivity(intent)
     }
 }
