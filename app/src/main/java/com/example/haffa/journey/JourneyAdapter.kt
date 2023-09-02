@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.haffa.databinding.JourneyCardLayoutBinding
 
 import com.bumptech.glide.Glide
-import com.example.haffa.journey.activity.ShowJourneyActivity
-import com.example.haffa.journey.model.Journey
+import com.example.haffa.journey.ShowJourneyActivity
+import com.example.haffa.journey.Journey
 import java.util.Locale
 
 class JourneyAdapter(private val context: Context, private val journeys: List<Journey>) : RecyclerView.Adapter<JourneyAdapter.ViewHolder>() {

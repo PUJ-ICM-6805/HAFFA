@@ -3,9 +3,7 @@ package com.example.haffa.journey
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
-import com.example.haffa.R
 import com.example.haffa.databinding.ActivityShowJourneyBinding
-import com.example.haffa.journey.model.Journey
 
 class ShowJourneyActivity : AppCompatActivity() {
 

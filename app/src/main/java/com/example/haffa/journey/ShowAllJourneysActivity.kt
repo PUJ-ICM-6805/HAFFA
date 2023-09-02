@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haffa.databinding.ActivityShowAllJorneysBinding
+import com.example.haffa.journey.adapter.JourneyAdapter
 import java.util.Date
 
 
