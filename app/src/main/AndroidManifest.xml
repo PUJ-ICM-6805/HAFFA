@@ -15,6 +15,15 @@
         android:theme="@style/Theme.HAFFA"
         tools:targetApi="31">
         <activity
+            android:name=".Profile.publishView"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.Gallery"
+            android:exported="false" />
+        <activity
+            android:name=".Profile.GalleryView"
+            android:exported="false" />
+        <activity
             android:name=".journey.activity.ShowJourneyActivity"
             android:exported="false" />
         <activity

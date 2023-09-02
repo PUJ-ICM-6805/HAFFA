@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/HAFFA.iml" filepath="$PROJECT_DIR$/.idea/modules/HAFFA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HAFFA.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HAFFA.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HAFFA.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HAFFA.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HAFFA.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HAFFA.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HAFFA.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HAFFA.app.unitTest.iml" />
+    </modules>
+  </component>
+</project>

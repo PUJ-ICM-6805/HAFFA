@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">HAFFA</string>
+    <string-array name="gallery_images">
+        <item>https://picsum.photos/id/76/367/267</item>
+        <item>https://picsum.photos/id/76/367/267</item>
+        <item>https://picsum.photos/id/76/367/267</item>
+        <item>https://picsum.photos/id/76/367/267</item>
+        <item>https://picsum.photos/id/76/367/267</item>
+        <item>https://picsum.photos/id/76/367/267</item>
+        <item>https://picsum.photos/id/76/367/267</item>
+        <item>https://picsum.photos/id/76/367/267</item>
+        <item>https://picsum.photos/id/76/367/267</item>
+        <item>https://picsum.photos/id/76/367/267</item>
+        <item>https://picsum.photos/id/76/367/267</item>
+        <item>https://picsum.photos/id/76/367/267</item>
+    </string-array>
 </resources>
