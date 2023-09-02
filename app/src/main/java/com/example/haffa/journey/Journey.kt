@@ -1,6 +1,7 @@
-package com.example.haffa.journey.model
+package com.example.haffa.journey
 
 
+import java.io.Serializable
 import java.util.Date
 
 data class Journey
@@ -9,4 +10,5 @@ data class Journey
      var points : Int,
      var duration : Double,
      var imgUrl : String,
-     var date: Date)
+     var altitude : Int,
+     var date: Date) : Serializable

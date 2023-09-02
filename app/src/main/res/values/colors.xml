@@ -5,4 +5,8 @@
     <color name="purpleTitle">#E8DAFD</color>
     <color name="purplebackground">#AEE8DAFD</color>
     <color name="purpleButton">#DFC7FF</color>
+    <color name="transparent">#00000000</color>
+    <color name ="shrine_purple_100">#E8DAFD</color>
+    <color name ="shrine_purple_200">#C69AFF</color>
+    <color name ="gray_100">#F4F6FC</color>
 </resources>

@@ -2,6 +2,7 @@ package com.example.haffa.journey.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.haffa.databinding.JourneyCardLayoutBinding
 
 import com.bumptech.glide.Glide
-import com.example.haffa.journey.model.Journey
+import com.example.haffa.journey.ShowJourneyActivity
+import com.example.haffa.journey.Journey
 import java.util.Locale
 
 class JourneyAdapter(private val context: Context, private val journeys: List<Journey>) : RecyclerView.Adapter<JourneyAdapter.ViewHolder>() {
@@ -24,6 +26,12 @@ class JourneyAdapter(private val context: Context, private val journeys: List<Jo
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentJourney = journeys[position]
         holder.bindData(currentJourney)
+
+        holder.itemView.setOnClickListener{
+            val intent = Intent(holder.itemView.context, ShowJourneyActivity::class.java)
+            intent.putExtra("journey", currentJourney)
+            holder.itemView.context.startActivity(intent)
+        }
 
     }
 

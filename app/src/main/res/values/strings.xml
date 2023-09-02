@@ -14,4 +14,15 @@
         <item>https://picsum.photos/id/76/367/267</item>
         <item>https://picsum.photos/id/76/367/267</item>
     </string-array>
+    <string name="grupos">Grupos</string>
+    <string name="trayectos">Trayectos</string>
+    <string name="home">Home</string>
+    <string name="puntos">Puntos</string>
+    <string name="perfil">Perfil</string>
+    <string name="name">Nombre</string>
+    <string name="distance">Distancia</string>
+    <string name="altitude">Altura</string>
+    <string name="points">Puntos obtenidos</string>
+    <string name="duration">Duración</string>
+    <string name="startJourney">Iniciar trayecto</string>
 </resources>

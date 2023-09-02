@@ -7,6 +7,12 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HAFFA.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HAFFA.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HAFFA.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HAFFA.app.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/HAFFA.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/HAFFA.app.unitTest.iml" />
+<<<<<<< HEAD
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.HAFFA.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.HAFFA.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.HAFFA.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.HAFFA.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.HAFFA.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.HAFFA.app.unitTest.iml" />
+>>>>>>> origin/main
     </modules>
   </component>
 </project>
