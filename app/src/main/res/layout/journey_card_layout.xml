@@ -5,10 +5,10 @@
     android:id="@+id/countryCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="20dp"
+    android:layout_margin="10dp"
     android:animateLayoutChanges="true"
     app:cardCornerRadius="10dp"
-    app:cardElevation="4dp"
+    app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -26,7 +26,7 @@
             android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+            android:background="@drawable/img_card_journey"/>
 
         <LinearLayout
             android:layout_width="150dp"
@@ -39,16 +39,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                tools:text="@tools:sample/cities" />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
-                android:textSize="18sp"
-                tools:text="@tools:sample/date/ddmmyy" />
+                android:textSize="18sp" />
 
         </LinearLayout>
 

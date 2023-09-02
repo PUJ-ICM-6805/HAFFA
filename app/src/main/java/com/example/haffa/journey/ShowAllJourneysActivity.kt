@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.haffa.databinding.ActivityShowAllJorneysBinding
+import com.example.haffa.journey.adapter.JourneyAdapter
 import java.util.Date
 
 
@@ -33,9 +34,10 @@ class ShowAllJourneysActivity : AppCompatActivity() {
         journeys.add(
             Journey(
             distance = 50.5,
-            route = "Route A",
+            route = "Monserrate",
             points = 100,
             duration = 2.5,
+                altitude = 3000,
             imgUrl = "https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2023/03/27/16799149846473.jpg",
             date = Date()
         )
@@ -44,9 +46,10 @@ class ShowAllJourneysActivity : AppCompatActivity() {
         journeys.add(
             Journey(
                 distance = 30.0,
-                route = "Route B",
+                route = "La conejera",
                 points = 75,
                 duration = 1.8,
+                altitude = 3000,
                 imgUrl = "https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2023/03/27/16799149846473.jpg",
                 date = Date()
             )
@@ -55,9 +58,10 @@ class ShowAllJourneysActivity : AppCompatActivity() {
         journeys.add(
             Journey(
                 distance = 70.2,
-                route = "Route C",
+                route = "Patios",
                 points = 150,
                 duration = 3.2,
+                altitude = 3000,
                 imgUrl = "https://e00-expansion.uecdn.es/assets/multimedia/imagenes/2023/03/27/16799149846473.jpg",
                 date = Date()
             )

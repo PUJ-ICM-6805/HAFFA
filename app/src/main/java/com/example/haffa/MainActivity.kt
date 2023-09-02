@@ -1,11 +1,15 @@
 package com.example.haffa
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+<<<<<<< HEAD
 import com.example.haffa.databinding.ActivityHomeLoginBinding
 import com.example.haffa.main.HomePageActivity
 import com.example.haffa.main.RegistryActivity
+=======
+import android.os.Bundle
+import com.example.haffa.journey.ShowAllJourneysActivity
+>>>>>>> origin/main
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityHomeLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+<<<<<<< HEAD
         binding.logIn.setOnClickListener(){
             val intent = Intent(this, HomePageActivity::class.java)
             startActivity(intent)
@@ -28,6 +33,12 @@ class MainActivity : AppCompatActivity() {
 
         //val intent = Intent(this, HomePageActivity::class.java)
         //startActivity(intent)
+=======
+        setContentView(R.layout.activity_main)
+>>>>>>> origin/main
 
+        //Test
+        val intent = Intent(this, ShowAllJourneysActivity::class.java)
+        startActivity(intent)
     }
 }

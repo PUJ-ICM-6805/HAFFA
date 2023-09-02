@@ -18,9 +18,12 @@
             android:name=".main.HomePageActivity"
             android:exported="false" />
         <activity
+<<<<<<< HEAD
             android:name=".main.RegistryActivity"
             android:exported="false" />
         <activity
+=======
+>>>>>>> origin/main
             android:name=".journey.ShowJourneyActivity"
             android:exported="false" />
         <activity
