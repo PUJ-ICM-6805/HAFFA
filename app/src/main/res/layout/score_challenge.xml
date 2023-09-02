@@ -16,7 +16,7 @@
         app:layout_constraintStart_toEndOf="@+id/ibChallengeIcon"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
+        tools:srcCompat="@drawable/btn_nav_prize" />
 
     <ImageButton
         android:id="@+id/ibChallengeIcon"
@@ -27,8 +27,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintVertical_bias="0.0" />
 
 
     <TextView

@@ -12,7 +12,8 @@
         android:layout_height="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/picinbio"/>
 
     <ImageButton
         android:id="@+id/ibHeart"
@@ -20,7 +21,8 @@
         android:layout_height="35dp"
         android:layout_marginStart="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPostProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/ivPostProfile"
+        tools:srcCompat="@drawable/home_heart"/>
 
     <ImageButton
         android:id="@+id/ibComent"
@@ -29,7 +31,8 @@
         app:layout_constraintEnd_toStartOf="@+id/tvProfileNameComent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ibHeart"
-        app:layout_constraintTop_toBottomOf="@+id/ivPostProfile" />
+        app:layout_constraintTop_toBottomOf="@+id/ivPostProfile"
+        tools:srcCompat="@drawable/home_comment"/>
 
     <TextView
         android:id="@+id/tvProfileNameComent"
