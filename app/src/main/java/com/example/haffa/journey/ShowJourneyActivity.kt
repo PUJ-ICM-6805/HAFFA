@@ -1,4 +1,4 @@
-package com.example.haffa.journey.activity
+package com.example.haffa.journey
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

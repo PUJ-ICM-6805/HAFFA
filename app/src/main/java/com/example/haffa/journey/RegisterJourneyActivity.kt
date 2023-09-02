@@ -1,7 +1,7 @@
-package com.example.haffa.journey.activity
+package com.example.haffa.journey
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.haffa.R
 
 class RegisterJourneyActivity : AppCompatActivity() {
