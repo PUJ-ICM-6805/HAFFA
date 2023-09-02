@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvfollowers"
+        android:layout_width="66dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="44dp"
+        android:gravity="center"
+        android:text="followers"
+        app:layout_constraintBottom_toTopOf="@+id/bAddPost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.34"
+        app:layout_constraintStart_toEndOf="@+id/tvFriends" />
+
+    <TextView
+        android:id="@+id/tvNumberFollowers"
+        android:layout_width="66dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvfollowers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.34"
+        app:layout_constraintStart_toEndOf="@+id/tvNumberFriends"
+        tools:text="8"/>
+
+    <TextView
+        android:id="@+id/tvNumberPoints"
+        android:layout_width="66dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvPoints"
+        app:layout_constraintStart_toEndOf="@+id/ivProfileImage"
+        tools:text="1.892"/>
+
+    <TextView
+        android:id="@+id/tvPoints"
+        android:layout_width="66dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="44dp"
+        android:gravity="center"
+        android:text="points"
+        app:layout_constraintBottom_toTopOf="@+id/bAddPost"
+        app:layout_constraintStart_toEndOf="@+id/ivProfileImage" />
+
+    <TextView
+        android:id="@+id/tvNumberFriends"
+        android:layout_width="66dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/tvFriends"
+        app:layout_constraintStart_toEndOf="@+id/tvNumberPoints"
+        tools:text="30"/>
+
+    <TextView
+        android:id="@+id/tvFriends"
+        android:layout_width="66dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="44dp"
+        android:gravity="center"
+        android:text="friends"
+        app:layout_constraintBottom_toTopOf="@+id/bAddPost"
+        app:layout_constraintStart_toEndOf="@+id/tvPoints" />
+
+    <TextView
+        android:id="@+id/tvProfileName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#E8DAFD"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="London Norris"
+        app:layout_constraintBottom_toTopOf="@+id/ivProfileImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+         />
+
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_width="107dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="28dp"
+        app:layout_constraintBottom_toTopOf="@+id/bAddPost"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/bAddPost"
+        android:layout_width="367dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#C69AFF"
+        android:gravity="center"
+        android:text="Añadir publicacion"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/rvPosts"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvPosts"
+        android:layout_width="match_parent"
+        android:layout_height="417dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
