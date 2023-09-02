@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.haffa.journey.ShowAllJourneysActivity
+import com.example.haffa.main.HomePageActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //Test
-        val intent = Intent(this, ShowAllJourneysActivity::class.java)
+        val intent = Intent(this, HomePageActivity::class.java)
         startActivity(intent)
     }
 }
