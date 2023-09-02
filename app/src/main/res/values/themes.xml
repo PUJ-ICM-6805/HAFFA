@@ -12,6 +12,6 @@
     </style>
 
     <style name="ThemeOverlay.App.BottomNavigationView" parent="">
-        <item name="colorPrimary">@color/shrine_purple_100</item>
+        <item name="colorPrimary">@color/shrine_purple_200</item>
     </style>
 </resources>
