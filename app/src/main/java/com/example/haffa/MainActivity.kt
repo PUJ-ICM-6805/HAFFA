@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityHomeLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        /*
         binding.logIn.setOnClickListener(){
             val intent = Intent(this, HomePageActivity::class.java)
             startActivity(intent)
@@ -29,10 +28,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-         */
 
-        val intent = Intent(this,
-            RegisterJourneyActivity::class.java)
-        startActivity(intent)
+
+        //val intent = Intent(this, RegisterJourneyActivity::class.java)
+        //startActivity(intent)
     }
 }
