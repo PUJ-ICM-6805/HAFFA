@@ -7,7 +7,7 @@ import com.example.haffa.R
 import com.example.haffa.databinding.ActivityBottomNavigationBinding
 import com.example.haffa.friends.Friends
 import com.example.haffa.points.Points
-import com.example.haffa.routes.MyRoutes
+import com.example.haffa.routes.ShowAllRoutesFragment
 import com.example.haffa.start.StartRoute
 
 class BottomNavigation : AppCompatActivity() {
@@ -24,7 +24,7 @@ class BottomNavigation : AppCompatActivity() {
             when (it.itemId) {
                 R.id.startFragment -> replaceFragment(StartRoute())
                 R.id.friendsFragment -> replaceFragment(Friends())
-                R.id.routesFragment -> replaceFragment(MyRoutes())
+                R.id.routesFragment -> replaceFragment(ShowAllRoutesFragment())
                 R.id.pointsFragment -> replaceFragment(Points())
 
                 else -> {
