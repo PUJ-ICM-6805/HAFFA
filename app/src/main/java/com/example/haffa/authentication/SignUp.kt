@@ -78,6 +78,7 @@ class SignUp : AppCompatActivity() {
     private fun signUp() {
         val email = emailEdit.text.toString()
         val pass = passEdit.text.toString()
+        var correct = false
         if (!isEmailValid(email)) {
             Toast.makeText(this@SignUp, "Email is not a valid format", Toast.LENGTH_SHORT).show()
             return
@@ -90,11 +91,16 @@ class SignUp : AppCompatActivity() {
                     String.format("The user %s is successfully registered", user!!.email),
                     Toast.LENGTH_LONG
                 ).show()
-                val intent = Intent(this, LogIn::class.java)
-                startActivity(intent)
+                correct = true
             }
         }.addOnFailureListener(this) { e ->
             Toast.makeText(this@SignUp, e.message, Toast.LENGTH_LONG).show() }
+
+        if  (correct){
+            val intent = Intent(this, LogIn::class.java)
+            startActivity(intent)
+        }
+
     }
 
 

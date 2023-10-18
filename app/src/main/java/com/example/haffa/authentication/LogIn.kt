@@ -66,11 +66,12 @@ class LogIn : AppCompatActivity() {
 
     private fun updateUI(currentUser: FirebaseUser?) {
         if (currentUser != null) {
-            val intent = Intent(baseContext, LogIn::class.java)
+            val intent = Intent(baseContext, BottomNavigation::class.java)
             intent.putExtra("user", currentUser.email)
             startActivity(intent)
         } else {
-            //
+            emailEdit.setText("")
+            passEdit.setText("")
         }
     }
 

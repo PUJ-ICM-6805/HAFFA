@@ -9,10 +9,14 @@ import com.example.haffa.friends.Friends
 import com.example.haffa.points.Points
 import com.example.haffa.routes.ShowAllRoutesFragment
 import com.example.haffa.start.StartRoute
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class BottomNavigation : AppCompatActivity() {
 
     private lateinit var binding: ActivityBottomNavigationBinding
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +36,8 @@ class BottomNavigation : AppCompatActivity() {
             }
             true
         }
+        // Initialize Firebase Auth
+        mAuth = Firebase.auth
     }
 
     private fun replaceFragment(fragment: Fragment) {
