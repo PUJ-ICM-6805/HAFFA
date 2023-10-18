@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1046984218662",
+    "project_id": "haffa-authentication",
+    "storage_bucket": "haffa-authentication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046984218662:android:51a97f6d616971431a6ee7",
+        "android_client_info": {
+          "package_name": "com.example.haffa"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqcVoatVNJRpv2tl1MtHJl_ocikwzB4Qg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
