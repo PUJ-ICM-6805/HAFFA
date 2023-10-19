@@ -1,19 +1,28 @@
 package com.example.haffa.authentication
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.widget.EditText
 import android.widget.Toast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.auth.FirebaseUser
+import androidx.appcompat.app.AppCompatActivity
+import com.example.haffa.R
 import com.example.haffa.databinding.ActivityLogInBinding
 import com.example.haffa.navigation.BottomNavigation
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+
 
 class LogIn : AppCompatActivity() {
     private lateinit var binding: ActivityLogInBinding // Declara la variable de enlace
@@ -23,6 +32,11 @@ class LogIn : AppCompatActivity() {
     private lateinit var passEdit: EditText
     private val VALID_EMAIL_ADDRESS_REGEX =
         Pattern.compile("[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE)
+
+    // Google
+    lateinit var mGoogleSignInClient: GoogleSignInClient
+    val RC_SIGN_IN: Int = 1
+    lateinit var gso:GoogleSignInOptions
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,21 +52,28 @@ class LogIn : AppCompatActivity() {
         // Obtener una referencia al botón bLogIn usando View Binding
         val buttonLogIn = binding.bLogIn
 
+        //
+        val buttonLogInGoogle = binding.bGoogle
+
         // Obtener una referencia al text view tvSignUp usando View Binding
         val textViewSignUp = binding.tvSignUp
 
         emailEdit = binding.etUsername
         passEdit = binding.etPasword
 
+        createRequest()
+
         // Acciones a realizar con el botón "Iniciar sesión"
         buttonLogIn.setOnClickListener {
-            // Crea una instancia del fragmento StartRoute
             login()
+        }
+
+        buttonLogInGoogle.setOnClickListener(){
+            loginGoogle()
         }
 
         // Acciones a realizar con el botón "Registro"
         textViewSignUp.setOnClickListener {
-            // Crea una instancia del fragmento StartRoute
             val intent = Intent(this, SignUp::class.java)
             startActivity(intent)
         }
@@ -127,6 +148,56 @@ class LogIn : AppCompatActivity() {
         return matcher.find()
     }
 
+    private fun createRequest() {
+        gso=GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    }
+
+
+    private fun loginGoogle() {
+        val signInIntent = mGoogleSignInClient.signInIntent
+        startActivityForResult(signInIntent, RC_SIGN_IN)
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == RC_SIGN_IN) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            val exception=task.exception
+
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                val account = task.getResult(ApiException::class.java)!!
+                firebaseAuthWithGoogle(account)
+            }
+            catch (e: ApiException) {
+                // Google Sign In failed, update UI appropriately
+                Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT)
+                    .show()
+                Log.d("Hola",e.toString())
+            }
+
+        }
+    }
+
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
+        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+
+        mAuth.signInWithCredential(credential)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    val intent= Intent(this,BottomNavigation::class.java)
+                    startActivity(intent)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Toast.makeText(this@LogIn, "Login Failed: ", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
 
 
 }
