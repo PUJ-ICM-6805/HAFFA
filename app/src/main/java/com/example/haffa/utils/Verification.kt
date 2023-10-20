@@ -154,7 +154,7 @@ class Verification {
             check = false
         }
 
-        // TODO: Add username repetition verification here
+        // Colocar verificación de usuario existente en bases de datos aquí
 
         return check
     }
