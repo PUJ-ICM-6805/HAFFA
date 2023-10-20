@@ -30,7 +30,7 @@
         android:text="@string/registration_message"
         android:textColor="@color/message_color"
         android:textSize="10.5sp"
-        app:layout_constraintBottom_toTopOf="@+id/etUsername"
+        app:layout_constraintBottom_toTopOf="@+id/etEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -38,14 +38,14 @@
         tools:ignore="SmallSp" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etUsername"
+        android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="255dp"
         android:background="@drawable/custom_edit_text"
         android:fontFamily="@font/poppins_regular"
-        android:hint="@string/username"
+        android:hint="@string/correo_electronico"
         android:minHeight="48dp"
         android:padding="10dp"
         android:singleLine="true"
@@ -75,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etUsername" />
+        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etFullName"
@@ -91,21 +91,21 @@
         android:singleLine="true"
         android:textColorHint="@color/message_color"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/etEmail"
+        app:layout_constraintBottom_toTopOf="@+id/etUsername"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etPasword" />
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etEmail"
+        android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/custom_edit_text"
         android:fontFamily="@font/poppins_regular"
-        android:hint="@string/correo_electronico"
+        android:hint="@string/username"
         android:minHeight="48dp"
         android:padding="10dp"
         android:singleLine="true"
@@ -135,7 +135,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/etUsername" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/etBirthDate"

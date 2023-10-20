@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.haffa.R
 import com.example.haffa.databinding.ActivityLogInBinding
 import com.example.haffa.navigation.BottomNavigation
+import com.example.haffa.utils.Verification
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -30,8 +31,7 @@ class LogIn : AppCompatActivity() {
     private lateinit var mAuth: FirebaseAuth
     private lateinit var emailEdit: EditText
     private lateinit var passEdit: EditText
-    private val VALID_EMAIL_ADDRESS_REGEX =
-        Pattern.compile("[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE)
+    private lateinit var verification: Verification
 
     // Google
     lateinit var mGoogleSignInClient: GoogleSignInClient
@@ -85,30 +85,22 @@ class LogIn : AppCompatActivity() {
         updateUI(currentUser)
     }
 
-    private fun updateUI(currentUser: FirebaseUser?) {
-        if (currentUser != null) {
-            val intent = Intent(baseContext, BottomNavigation::class.java)
-            intent.putExtra("user", currentUser.email)
-            startActivity(intent)
-        } else {
-            emailEdit.setText("")
-            passEdit.setText("")
-        }
-    }
+
 
     private fun login() {
         val email = emailEdit.text.toString()
-        val pass = passEdit.text.toString()
-        if (!isEmailValid(email)) {
+        if (!verification.isEmailValid(email)) {
             Toast.makeText(this@LogIn, "Usuario no válido.", Toast.LENGTH_SHORT).show()
             return
         }
-        signInUser(email, pass)
+        signInUser(emailEdit, passEdit)
     }
 
-    private fun signInUser(email: String, password: String) {
-        if (validateForm()) {
-            mAuth.signInWithEmailAndPassword(email, password)
+    private fun signInUser(email: EditText, password: EditText) {
+        val emailtxt = emailEdit.text.toString()
+        val passtxt = passEdit.text.toString()
+        if (verification.validateForm(email,password)) {
+            mAuth.signInWithEmailAndPassword(emailtxt, passtxt)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val user = mAuth.currentUser
@@ -123,30 +115,7 @@ class LogIn : AppCompatActivity() {
         }
     }
 
-    private fun validateForm(): Boolean {
-        var valid = true
-        val email = emailEdit.text.toString()
-        if (TextUtils.isEmpty(email)) {
-            emailEdit.error = "Required"
-            valid = false
-        } else {
-            emailEdit.error = null
-        }
-        val password = passEdit.text.toString()
-        if (TextUtils.isEmpty(password)) {
-            passEdit.error = "Required"
-            valid = false
-        } else {
-            passEdit.error = null
-        }
-        return valid
-    }
 
-
-    private fun isEmailValid(emailStr: String?): Boolean {
-        val matcher: Matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr)
-        return matcher.find()
-    }
 
 
 
@@ -163,12 +132,12 @@ class LogIn : AppCompatActivity() {
         val signInIntent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
-            val exception=task.exception
 
             try {
                 // Google Sign In was successful, authenticate with Firebase
@@ -179,7 +148,6 @@ class LogIn : AppCompatActivity() {
                 // Google Sign In failed, update UI appropriately
                 Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT)
                     .show()
-                Log.d("Hola",e.toString())
             }
 
         }
@@ -191,8 +159,8 @@ class LogIn : AppCompatActivity() {
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    val intent= Intent(this,BottomNavigation::class.java)
+                    val intent= Intent(this,SignUp::class.java)
+                    intent.putExtra("user_email", account.email)
                     startActivity(intent)
                 } else {
                     // If sign in fails, display a message to the user.
@@ -201,5 +169,14 @@ class LogIn : AppCompatActivity() {
             }
     }
 
-
+    private fun updateUI(currentUser: FirebaseUser?) {
+        if (currentUser != null) {
+            val intent = Intent(baseContext, BottomNavigation::class.java)
+            intent.putExtra("user", currentUser.email)
+            startActivity(intent)
+        } else {
+            emailEdit.setText("")
+            passEdit.setText("")
+        }
+    }
 }
