@@ -7,68 +7,51 @@
     tools:context=".start.ShareRoute">
 
 
-    <ImageButton
-        android:id="@+id/ibCamera"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="30dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/img_camera"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toStartOf="@+id/ibGallery"
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="308dp"
+        android:layout_height="173dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="1dp"
+        android:src="@drawable/ic_launcher_foreground"
+        app:layout_constraintBottom_toTopOf="@+id/buttomCamera"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.063"
-        app:layout_constraintWidth_percent="0.5"
-        tools:ignore="SpeakableTextPresentCheck" />
+        app:layout_constraintVertical_bias="1.0"
+        app:layout_constraintWidth_percent="0.5" />
 
-    <TextView
-        android:id="@+id/textCamera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:fontFamily="@font/poppins_extra_bold"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:text="Camera"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/ibCamera"
-        app:layout_constraintEnd_toEndOf="@id/ibCamera"
-        app:layout_constraintStart_toStartOf="@id/ibCamera"
-        app:layout_constraintTop_toTopOf="@id/ibCamera" />
+    <Button
+        android:id="@+id/buttomCamera"
+        android:layout_width="118dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#E1CCFB"
+        android:drawableBottom="@drawable/ic_buttom_camera"
+        android:fontFamily="@font/poppins_regular"
+        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintWidth_percent="0.5" />
 
+    <Button
+        android:id="@+id/buttomGallery"
+        android:layout_width="118dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="#E1CCFB"
+        android:drawableBottom="@drawable/ic_buttom_gallery"
+        android:fontFamily="@font/poppins_regular"
 
-    <ImageButton
-        android:id="@+id/ibGallery"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="30dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/img_gallery"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ibCamera"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.063"
-        app:layout_constraintWidth_percent="0.5"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/textGallery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:fontFamily="@font/poppins_extra_bold"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:text="Gallery"
-        android:textColor="#000000"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/ibGallery"
-        app:layout_constraintEnd_toEndOf="@id/ibGallery"
-        app:layout_constraintStart_toStartOf="@id/ibGallery"
-        app:layout_constraintTop_toTopOf="@id/ibGallery" />
+        app:layout_constraintBottom_toTopOf="@+id/editText"
+        app:layout_constraintStart_toEndOf="@+id/buttomCamera"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.625"
+        app:layout_constraintWidth_percent="0.5" />
 
     <EditText
         android:id="@+id/editText"

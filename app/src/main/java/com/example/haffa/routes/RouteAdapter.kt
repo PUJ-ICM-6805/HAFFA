@@ -52,7 +52,7 @@ class RouteAdapter(private val context: Context, private val routes: List<Route>
         fun bindData(currentRoute: Route){
             binding.title.text = currentRoute.name
 
-            // Format the date to your desired format
+
             val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
             val formattedDate = dateFormat.format(currentRoute.date)
             binding.date.text = formattedDate
