@@ -140,7 +140,7 @@ class SignUp : AppCompatActivity() {
      */
     private fun saveAdditionalInfoToDatabase(): Boolean {
         // Para ANDRÉS: Aquí es donde tienes que aggregar la información adicional,
-        // después de verificar los datos, los agregas :))
+        // después de verificar los datos, los agregas y haces un intent  :))
 
         // Verify and save additional information
         return verification.isDataValid(emailEdit, telephone, passEdit, birthDate)
