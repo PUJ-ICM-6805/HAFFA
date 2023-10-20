@@ -33,6 +33,8 @@ class SignUp : AppCompatActivity() {
         // Initialize Firebase Auth
         mAuth = Firebase.auth
 
+        verification = Verification()
+
         binding = ActivitySignUpBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
@@ -40,6 +42,7 @@ class SignUp : AppCompatActivity() {
         emailEdit = binding.etEmail
         passEdit = binding.etPasword
         birthDate = binding.etBirthDate
+        telephone = binding.etPhoneNumber
 
         // Obtener una referencia al botón bLogIn usando View Binding
         val buttonContinue = binding.bContinue
@@ -100,6 +103,7 @@ class SignUp : AppCompatActivity() {
     private fun saveAdditionalInfoToDatabase(){
         if (!verification.isTelephoneValid(telephone.toString())){
             telephone.error = "Formato teléfono inválido"
+            return
         }
 
         // Agregar verificación de username repetido

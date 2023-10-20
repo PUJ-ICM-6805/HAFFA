@@ -31,7 +31,7 @@ class BottomNavigation : AppCompatActivity() {
                 R.id.friendsFragment -> replaceFragment(Friends())
                 R.id.routesFragment -> replaceFragment(ShowAllRoutesFragment())
                 R.id.pointsFragment -> replaceFragment(Points())
-                R.id.pointsFragment -> replaceFragment(LogOut())
+                R.id.logOutFragment -> replaceFragment(LogOut())
                 else -> {
                 }
             }

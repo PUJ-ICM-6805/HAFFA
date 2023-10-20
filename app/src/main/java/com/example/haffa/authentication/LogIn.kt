@@ -151,6 +151,8 @@ class LogIn : AppCompatActivity() {
             }
 
         }
+
+        mGoogleSignInClient.signOut()
     }
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
