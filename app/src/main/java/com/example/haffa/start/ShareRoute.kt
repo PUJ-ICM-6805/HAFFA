@@ -16,6 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.haffa.R
 import com.example.haffa.databinding.FragmentShareRouteBinding
+import org.osmdroid.util.GeoPoint
 
 class ShareRoute : Fragment() {
     private lateinit var binding: FragmentShareRouteBinding
@@ -26,6 +27,16 @@ class ShareRoute : Fragment() {
     private val REQUEST_IMAGE_CAPTURE = 102
     private val REQUEST_PICK_IMAGE = 103
 
+    // Variables para almacenar los datos recibidos
+    private var distanceTraveled: Float = 0f
+    private var elapsedTimeSeconds: Long = 0
+    private var minAltitudeMeters: Float = 0f
+    private var maxAltitudeMeters: Float = 0f
+    private var averageAccelerationMS2: Float = 0f
+    private var currentDateTime: String = ""
+    private var polylineData: List<GeoPoint>? = null
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -35,6 +46,30 @@ class ShareRoute : Fragment() {
 
         // Obtener una referencia al botón bStartRoute usando View Binding
         val buttonbShareRoute = binding.bShareRoute
+
+        // Recuperar datos del Bundle
+        arguments?.let {
+            distanceTraveled = it.getFloat("distanceTraveled")
+            elapsedTimeSeconds = it.getLong("elapsedTimeSeconds")
+            minAltitudeMeters = it.getFloat("minAltitudeMeters")
+            maxAltitudeMeters = it.getFloat("maxAltitudeMeters")
+            averageAccelerationMS2 = it.getFloat("averageAccelerationMS2")
+            currentDateTime = it.getString("currentDateTime", "")
+            polylineData = it.getSerializable("polylineData") as? List<GeoPoint>
+        }
+
+        // Construir la cadena de texto con los datos
+        val dataText = """
+        Distancia: ${distanceTraveled}m
+        Altura máxima: ${maxAltitudeMeters}m
+        Altura mínima: ${minAltitudeMeters}m
+        Velocidad promedio: ${averageAccelerationMS2}m/s²
+        Calificación obtenida: 0
+        Duración: ${elapsedTimeSeconds}s
+        Fecha de la ruta: $currentDateTime""".trimIndent()
+
+        // Configurar el texto en tvData
+        binding.tvData.text = dataText
 
         // Configurar un OnClickListener para el botón
         buttonbShareRoute.setOnClickListener {
@@ -144,12 +179,16 @@ class ShareRoute : Fragment() {
                     }
                 }
             }
+
             REQUEST_GALLERY_PERMISSION -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     openGallery()
                 } else {
                     if (shouldShowRequestPermissionRationale(Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                        explainPermissionRequirement(Manifest.permission.READ_EXTERNAL_STORAGE, requestCode)
+                        explainPermissionRequirement(
+                            Manifest.permission.READ_EXTERNAL_STORAGE,
+                            requestCode
+                        )
                     } else {
                         Toast.makeText(
                             requireContext(),
@@ -183,6 +222,7 @@ class ShareRoute : Fragment() {
                     val imageBitmap = data?.extras?.get("data") as? Bitmap
                     binding.imageView2.setImageBitmap(imageBitmap)
                 }
+
                 REQUEST_PICK_IMAGE -> {
                     val imageUri = data?.data
                     binding.imageView2.setImageURI(imageUri)
