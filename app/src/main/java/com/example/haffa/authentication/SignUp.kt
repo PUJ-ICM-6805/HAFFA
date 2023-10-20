@@ -10,6 +10,7 @@ import com.example.haffa.R
 import com.example.haffa.databinding.ActivityLogInBinding
 import com.example.haffa.databinding.ActivitySignUpBinding
 import com.example.haffa.navigation.BottomNavigation
+import com.example.haffa.utils.DatePicker
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
@@ -45,6 +46,7 @@ class SignUp : AppCompatActivity() {
 
         emailEdit = binding.etEmail
         passEdit = binding.etPasword
+        birthDate = binding.etBirthDate
 
         // Obtener una referencia al botón bLogIn usando View Binding
         val buttonContinue = binding.bContinue
@@ -53,6 +55,10 @@ class SignUp : AppCompatActivity() {
         buttonContinue.setOnClickListener {
             // Crea una instancia del fragmento StartRoute
             signUp()
+        }
+        birthDate.setOnClickListener {
+            val newFragment = DatePicker(birthDate)
+            newFragment.show(supportFragmentManager, "datePicker")
         }
     }
 

@@ -150,6 +150,8 @@
         android:minHeight="48dp"
         android:padding="10dp"
         android:singleLine="true"
+        android:clickable="false"
+        android:focusable="false"
         android:textColorHint="@color/message_color"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
