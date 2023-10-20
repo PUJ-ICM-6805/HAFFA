@@ -103,7 +103,7 @@ class Verification {
             return false
         }
 
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+        val dateFormat = SimpleDateFormat("dd-MM-yyyy")
         val currentDate = Date()
         val dateOfBirthDate = dateFormat.parse(dateOfBirth)
 
