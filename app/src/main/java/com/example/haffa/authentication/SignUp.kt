@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.haffa.databinding.ActivitySignUpBinding
+import com.example.haffa.navigation.BottomNavigation
 import com.example.haffa.utils.DatePicker
 import com.example.haffa.utils.Verification
 import com.google.firebase.auth.FirebaseAuth
@@ -119,15 +120,11 @@ class SignUp : AppCompatActivity() {
                     Toast.LENGTH_LONG
                 ).show()
                 correct = true
+                val intent = Intent(this, BottomNavigation::class.java)
+                startActivity(intent)
             }
         }.addOnFailureListener(this) { e ->
             Toast.makeText(this@SignUp, e.message, Toast.LENGTH_LONG).show()
-        }
-
-        // If the registration is successful, navigate to the login screen
-        if (correct) {
-            val intent = Intent(this, LogIn::class.java)
-            startActivity(intent)
         }
     }
 
