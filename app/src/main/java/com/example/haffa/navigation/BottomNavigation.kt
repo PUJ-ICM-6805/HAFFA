@@ -38,6 +38,8 @@ class BottomNavigation : AppCompatActivity() {
         }
         // Initialize Firebase Auth
         mAuth = Firebase.auth
+
+        val user = mAuth.currentUser
     }
 
     private fun replaceFragment(fragment: Fragment) {

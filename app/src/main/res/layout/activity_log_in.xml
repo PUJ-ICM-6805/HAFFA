@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".authentication.LogIn">
+    tools:context=".authentication.LogIn"
+    android:paddingTop="80dp">
 
     <ImageView
         android:id="@+id/ivLogoLogIn"
@@ -23,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="60dp"
         android:background="@drawable/custom_edit_text"
         android:fontFamily="@font/poppins_regular"
         android:hint="Usuario"
@@ -51,6 +52,7 @@
         android:singleLine="true"
         android:textColorHint="@color/message_color"
         android:textSize="14sp"
+        android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etUsername" />
@@ -131,43 +133,10 @@
         android:text="Continuar con Google"
         android:textColor="#585858"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/bFacebook"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vSeparator" />
 
-    <Button
-        android:id="@+id/bFacebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="#F3E9FF"
-        android:drawableLeft="@drawable/ic_logo_facebook"
-        android:fontFamily="@font/poppins_regular"
-        android:text="Continuar con Facebook"
-        android:textColor="#585858"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/bApple"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bGoogle" />
-
-    <Button
-        android:id="@+id/bApple"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginBottom="50dp"
-        android:backgroundTint="#F3E9FF"
-        android:drawableLeft="@drawable/ic_logo_apple"
-        android:fontFamily="@font/poppins_regular"
-        android:text="Continuar con Apple"
-        android:textColor="#585858"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bFacebook" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

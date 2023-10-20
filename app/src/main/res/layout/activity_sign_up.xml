@@ -70,6 +70,7 @@
         android:singleLine="true"
         android:textColorHint="@color/message_color"
         android:textSize="14sp"
+        android:inputType="textPassword"
         app:layout_constraintBottom_toTopOf="@+id/etFullName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
