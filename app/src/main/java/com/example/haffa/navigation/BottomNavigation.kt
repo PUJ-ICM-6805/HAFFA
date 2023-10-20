@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.haffa.R
+import com.example.haffa.authentication.LogOut
 import com.example.haffa.databinding.ActivityBottomNavigationBinding
 import com.example.haffa.friends.Friends
 import com.example.haffa.points.Points
@@ -30,7 +31,7 @@ class BottomNavigation : AppCompatActivity() {
                 R.id.friendsFragment -> replaceFragment(Friends())
                 R.id.routesFragment -> replaceFragment(ShowAllRoutesFragment())
                 R.id.pointsFragment -> replaceFragment(Points())
-
+                R.id.pointsFragment -> replaceFragment(LogOut())
                 else -> {
                 }
             }
