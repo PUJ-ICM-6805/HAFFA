@@ -125,7 +125,7 @@ class LogIn : AppCompatActivity() {
 
         // Validate the user's email address
         if (!verification.isEmailValid(email)) {
-            Toast.makeText(this@LogIn, "Invalid User.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@LogIn, "Usuario Incorrecto.", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -161,7 +161,7 @@ class LogIn : AppCompatActivity() {
                         startActivity(intent)
                     } else {
                         // Display an error message on failed authentication
-                        Toast.makeText(this@LogIn, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@LogIn, "Autenticación fallida.", Toast.LENGTH_SHORT).show()
                         updateUI(null)
                     }
                 }
@@ -227,7 +227,7 @@ class LogIn : AppCompatActivity() {
                 firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
                 // Handle the case where Google Sign-In failed by displaying an appropriate message to the user
-                Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Autenticación Fallida", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -256,7 +256,7 @@ class LogIn : AppCompatActivity() {
                     startActivity(intent)
                 } else {
                     // If the sign-in fails, display a failure message to the user
-                    Toast.makeText(this@LogIn, "Login Failed: ", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LogIn, "Autneticación Fallida: ", Toast.LENGTH_SHORT).show()
                 }
             }
     }
