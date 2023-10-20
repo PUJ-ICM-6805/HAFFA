@@ -22,5 +22,10 @@
         android:icon="@drawable/ic_nav_points"
         android:title="Points"/>
 
+    <item
+        android:id="@+id/logOutFragment"
+        android:icon="@drawable/ic_nav_logout"
+        android:title="Logout"/>
+
 
 </menu>
