@@ -39,14 +39,14 @@ class Verification {
         var valid = true
         val email = emailEdit.text.toString()
         if (TextUtils.isEmpty(email)) {
-            emailEdit.error = "Required"
+            emailEdit.error = "Requerido"
             valid = false
         } else {
             emailEdit.error = null
         }
         val password = passEdit.text.toString()
         if (TextUtils.isEmpty(password)) {
-            passEdit.error = "Required"
+            passEdit.error = "Requerido"
             valid = false
         } else {
             passEdit.error = null
@@ -135,22 +135,22 @@ class Verification {
         var check = true
 
         if (!isEmailValid(emailEditText.text.toString())) {
-            emailEditText.error = "Invalid email format"
+            emailEditText.error = "Formato de email inválido"
             check = false
         }
 
         if (!isTelephoneValid(telephoneEditText.text.toString())) {
-            telephoneEditText.error = "Invalid phone format"
+            telephoneEditText.error = "Formto de teléfono inválido"
             check = false
         }
 
         if (passwordEditText.isEnabled && !isPasswordValid(passwordEditText.text.toString())) {
-            passwordEditText.error = "Must contain at least one digit, one uppercase letter, and one symbol (., !). Minimum length: 8"
+            passwordEditText.error = "Debe contener al menos un dígito, una maypusucla y un símbolo (., !). Mínima longitud: 8"
             check = false
         }
 
         if (!isAdult(birthDateEditText.text.toString())) {
-            birthDateEditText.error = "Only adults are allowed"
+            birthDateEditText.error = "Solamente adultos son permitidos"
             check = false
         }
 
