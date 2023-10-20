@@ -76,10 +76,11 @@ class SignUp : AppCompatActivity() {
         val email = emailEdit.text.toString()
         val pass = passEdit.text.toString()
         var correct = false
-        if (!verification.isEmailValid(email)) {
-            Toast.makeText(this@SignUp, "Email is not a valid format", Toast.LENGTH_SHORT).show()
+
+        if(!saveAdditionalInfoToDatabase()){
             return
         }
+
         mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
                 val user = mAuth.currentUser
@@ -100,13 +101,8 @@ class SignUp : AppCompatActivity() {
 
     }
 
-    private fun saveAdditionalInfoToDatabase(){
-        if (!verification.isTelephoneValid(telephone.toString())){
-            telephone.error = "Formato teléfono inválido"
-            return
-        }
-
-        // Agregar verificación de username repetido
+    private fun saveAdditionalInfoToDatabase(): Boolean {
+        return verification.isDataValid(emailEdit,telephone,passEdit,birthDate)
     }
 
 }

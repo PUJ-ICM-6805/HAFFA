@@ -44,6 +44,8 @@ class LogIn : AppCompatActivity() {
         // Initialize Firebase Auth
         mAuth = Firebase.auth
 
+        verification = Verification()
+
         // Inflar la vista utilizando View Binding
         binding = ActivityLogInBinding.inflate(layoutInflater)
         val view = binding.root
