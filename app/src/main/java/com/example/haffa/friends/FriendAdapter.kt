@@ -1,61 +1,59 @@
 package com.example.haffa.friends
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.CursorAdapter
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.haffa.R
 import com.example.haffa.databinding.CardFriendBinding
 
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
+class FriendAdapter(context: Context, cursor: Cursor?) : CursorAdapter(context, cursor, 0) {
 
-class FriendAdapter(private val context: Context, private val friends: List<Friend>) : RecyclerView.Adapter<FriendAdapter.ViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        val binding =
-            CardFriendBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+    override fun newView(context: Context, cursor: Cursor, parent: ViewGroup?): View {
+        val binding = CardFriendBinding.inflate(LayoutInflater.from(context), parent, false)
+        return binding.root
     }
 
-    override fun onBindViewHolder(holder: FriendAdapter.ViewHolder, position: Int) {
-        val currentFriend = friends[position]
-        holder.bindData(currentFriend)
+    @SuppressLint("Range", "Recycle")
+    override fun bindView(view: View?, context: Context?, cursor: Cursor?) {
+        val binding = CardFriendBinding.bind(view!!)
 
-        holder.itemView.setOnClickListener{
+        // Nombre del contacto
+        val contactNameText: TextView = binding.name
+        contactNameText.text = cursor!!.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY))
 
-            val bundle = Bundle()
-            bundle.putSerializable("friend", currentFriend)
+        // Teléfono principal del contacto
+        val contactId = cursor.getInt(0)
+        val phoneCursor = context!!.contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", arrayOf(contactId.toString()), null)
+        if (phoneCursor != null && phoneCursor.moveToFirst()) {
+            val phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
+            val contactPhoneText: TextView = binding.phone
+            contactPhoneText.text = phoneNumber
+            phoneCursor.close()
+        }
 
-            val fragmentTransaction = (holder.itemView.context as AppCompatActivity).supportFragmentManager.beginTransaction()
-            val newFragment = FriendsRoutes()
-            newFragment.arguments = bundle
-            fragmentTransaction.replace(R.id.frame_container, newFragment)
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
+        // Avatar del contacto si lo tiene, si no, avatar por defecto
+        val contactPhotoImageView: ImageView = binding.cardImg
+        val photoUri = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI))
+        if (photoUri != null) {
+            contactPhotoImageView.setImageURI(Uri.parse(photoUri))
+            Glide.with(context).load(photoUri).transform(CircleCrop()).into(contactPhotoImageView)
+        } else {
+            // Si no hay foto de avatar, podemos mostrar una imagen predeterminada
+            contactPhotoImageView.setImageResource(R.drawable.img_default_avatar)
         }
 
     }
-
-    override fun getItemCount(): Int {
-        return friends.size
-    }
-
-    inner class ViewHolder(private val binding: CardFriendBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bindData(currentFriend: Friend){
-            binding.name.text = currentFriend.name
-
-            Glide.with(context)
-                .load(currentFriend.imgUrl)
-                .transform(CircleCrop())
-                .into(binding.cardImg)
-
-        }
-    }
-
 }

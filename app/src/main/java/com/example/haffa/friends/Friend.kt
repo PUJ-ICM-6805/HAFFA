@@ -6,5 +6,6 @@ import java.io.Serializable
 data class Friend(
     var imgUrl: String,
     var name: String,
+    var phone: String,
     val routes: List<Route>
 ) : Serializable
