@@ -86,16 +86,37 @@ class ShareRoute : Fragment() {
         // Configurar el texto en tvData
         binding.tvData.text = dataText
 
-        val routeName = binding.editText.text.toString()
-
         // Configurar un OnClickListener para el botón
         buttonbShareRoute.setOnClickListener {
 
             val routeName = binding.editText.text.toString()
-            // Se sube la imagen a Firebase Storage
-            var downloadImageUri: Uri? = null
 
-            if (localImageUri != null) {
+            if (routeName.isEmpty()) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please enter a route name.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            } else if (localImageUri == null) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please take a picture or select one from the gallery.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Route saved successfully.",
+                    Toast.LENGTH_SHORT
+                ).show()
+
+
+                val routeName = binding.editText.text.toString()
+                // Se sube la imagen a Firebase Storage
+                var downloadImageUri: Uri? = null
+
                 val imageService = ImageService()
                 imageService.upload(localImageUri!!) { downloadImageUri ->
                     saveRouteToDatabase(
@@ -110,33 +131,23 @@ class ShareRoute : Fragment() {
                     )
                 }
 
-            } else {
-                saveRouteToDatabase(
-                    routeName,
-                    distanceTraveled,
-                    maxAltitudeMeters,
-                    minAltitudeMeters,
-                    averageAccelerationMS2,
-                    elapsedTimeSeconds,
-                    polylineData,
-                    null
-                )
+
+                // Crear una instancia del fragmento de destino (FinishRoute)
+                val startRouteFragment = StartRoute()
+
+                // Obtener el FragmentManager
+                val fragmentManager = parentFragmentManager
+
+                // Iniciar la transacción de fragmento para reemplazar StartRoute con FinishRoute
+                fragmentManager.beginTransaction()
+                    .replace(
+                        R.id.frame_container,
+                        startRouteFragment
+                    )
+                    .addToBackStack(null) // Agregar a la pila de retroceso
+                    .commit()
             }
 
-            // Crear una instancia del fragmento de destino (FinishRoute)
-            val startRouteFragment = StartRoute()
-
-            // Obtener el FragmentManager
-            val fragmentManager = parentFragmentManager
-
-            // Iniciar la transacción de fragmento para reemplazar StartRoute con FinishRoute
-            fragmentManager.beginTransaction()
-                .replace(
-                    R.id.frame_container,
-                    startRouteFragment
-                )
-                .addToBackStack(null) // Agregar a la pila de retroceso
-                .commit()
         }
 
         binding.buttomCamera.setOnClickListener {
