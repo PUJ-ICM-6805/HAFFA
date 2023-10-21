@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.haffa.R
 import com.example.haffa.databinding.CardRouteBinding
+import com.example.haffa.model.Route
 import java.util.Locale
 
-class RouteAdapter(private val context: Context, private val routes: List<Route>) : RecyclerView.Adapter<RouteAdapter.ViewHolder>() {
+class RouteAdapter(private val context: Context, private var routes: List<Route>) : RecyclerView.Adapter<RouteAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -23,7 +24,7 @@ class RouteAdapter(private val context: Context, private val routes: List<Route>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentRoute = routes[position]
+        val currentRoute = routes!![position]
         holder.bindData(currentRoute)
 
         holder.itemView.setOnClickListener{
@@ -42,20 +43,20 @@ class RouteAdapter(private val context: Context, private val routes: List<Route>
     }
 
     override fun getItemCount(): Int {
-        return routes.size
+        return routes!!.size
+    }
+
+    fun updateData(newRoutes: List<Route>) {
+        this.routes = newRoutes
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val binding: CardRouteBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        @SuppressLint("SimpleDateFormat")
         fun bindData(currentRoute: Route){
             binding.title.text = currentRoute.name
-
-
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val formattedDate = dateFormat.format(currentRoute.date)
-            binding.date.text = formattedDate
+            binding.date.text = currentRoute.localDate
 
             Glide.with(context).load(currentRoute.imgUrl).into(binding.cardImg)
 

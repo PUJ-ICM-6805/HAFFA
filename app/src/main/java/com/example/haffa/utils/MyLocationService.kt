@@ -1,4 +1,4 @@
-package com.example.haffa
+package com.example.haffa.utils
 
 import android.annotation.SuppressLint
 import android.content.Context

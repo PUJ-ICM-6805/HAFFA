@@ -1,6 +1,8 @@
 package com.example.haffa.model
 
-data class User {
-    email: String,
-
-}
+data class UserProfile (
+    val username: String,
+    val fullName: String,
+    val telephone: String,
+    val birthDate: String
+)

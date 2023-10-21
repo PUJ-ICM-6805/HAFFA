@@ -1,34 +1,55 @@
 package com.example.haffa.routes
 
-import androidx.fragment.app.Fragment
-
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import com.example.haffa.R
+import com.example.haffa.model.Route
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.RoundCap
 
 class MapsFragment : Fragment() {
 
+    private lateinit var route: Route
+
     private val callback = OnMapReadyCallback { googleMap ->
-        /**
-         * Manipulates the map once available.
-         * This callback is triggered when the map is ready to be used.
-         * This is where we can add markers or lines, add listeners or move the camera.
-         * In this case, we just add a marker near Sydney, Australia.
-         * If Google Play services is not installed on the device, the user will be prompted to
-         * install it inside the SupportMapFragment. This method will only be triggered once the
-         * user has installed Google Play services and returned to the app.
-         */
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        // Extract locations from the Route object and draw polylines
+        val polylineOptions = PolylineOptions()
+            .color(
+                ContextCompat.getColor(requireContext(), R.color.violet))
+            .width(20f)
+            .startCap(RoundCap())
+            .endCap(RoundCap())
+        route.locations.forEach {
+            val latLng = LatLng(it["latitude"]!!, it["longitude"]!!)
+            polylineOptions.add(latLng)
+        }
+        googleMap.addPolyline(polylineOptions)
+
+        // Adding a marker at the start of the route
+        val startLocation = route.locations.first()
+        val startLatLng = LatLng(startLocation["latitude"]!!, startLocation["longitude"]!!)
+        googleMap.addMarker(MarkerOptions().position(startLatLng).title(route.name))
+
+        // Moving the camera to the start of the route
+        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLatLng, 15f))
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            route = it.getSerializable("route") as Route
+        }
     }
 
     override fun onCreateView(
@@ -43,5 +64,13 @@ class MapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+    }
+
+    companion object {
+        fun newInstance(route: Route) = MapsFragment().apply {
+            arguments = Bundle().apply {
+                putSerializable("route", route)
+            }
+        }
     }
 }

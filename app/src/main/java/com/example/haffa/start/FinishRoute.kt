@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.haffa.R
 import com.example.haffa.databinding.FragmentFinishRouteBinding
+import com.example.haffa.utils.PermissionManager
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.views.CustomZoomButtonsController
@@ -133,6 +134,7 @@ class FinishRoute : Fragment() {
         pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE)
         accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
 
+
         if (ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -143,6 +145,7 @@ class FinishRoute : Fragment() {
         } else {
             requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
         }
+
 
         binding.bFinishRoute.setOnClickListener {
             stopTracking()

@@ -1,15 +1,15 @@
-package com.example.haffa
+package com.example.haffa.utils
 
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 
-class PermissionManager(private val activity: AppCompatActivity) {
+class PermissionManager(private val activity: FragmentActivity) {
 
     // Callback para cuando se otorga un permiso
     private var permissionGrantedCallback: (() -> Unit)? = null

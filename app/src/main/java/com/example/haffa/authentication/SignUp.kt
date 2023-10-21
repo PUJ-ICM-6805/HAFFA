@@ -7,8 +7,10 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.haffa.databinding.ActivitySignUpBinding
+import com.example.haffa.model.UserProfile
 import com.example.haffa.navigation.BottomNavigation
 import com.example.haffa.utils.DatePicker
+import com.example.haffa.repository.UserProfileRepository
 import com.example.haffa.utils.Verification
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -27,14 +29,19 @@ class SignUp : AppCompatActivity() {
 
     // EditText for user's email input.
     private lateinit var emailEdit: EditText
+
     // EditText for user's password input.
     private lateinit var passEdit: EditText
+
     // EditText for user's full name input.
     private lateinit var fullName: EditText
+
     // EditText for user's username input.
     private lateinit var username: EditText
+
     // EditText for user's telephone number input.
     private lateinit var telephone: EditText
+
     // EditText for user's birthdate input.
     private lateinit var birthDate: EditText
 
@@ -62,6 +69,8 @@ class SignUp : AppCompatActivity() {
         passEdit = binding.etPasword
         birthDate = binding.etBirthDate
         telephone = binding.etPhoneNumber
+        fullName = binding.etFullName
+        username = binding.etUsername
 
         // Get a reference to the "Continue" button using View Binding
         val buttonContinue = binding.bContinue
@@ -79,10 +88,9 @@ class SignUp : AppCompatActivity() {
 
         // Set an onClick listener for the "Continue" button
         buttonContinue.setOnClickListener {
-            if (userEmail != null){
+            if (userEmail != null) {
                 saveAdditionalInfoToDatabase()
-            }
-            else{
+            } else {
                 signUp()
             }
         }
@@ -106,13 +114,16 @@ class SignUp : AppCompatActivity() {
         var correct = false
 
         // Verify and save additional information in the database
-        if (!saveAdditionalInfoToDatabase()) {
+        if (!verification.isDataValid(emailEdit, telephone, passEdit, birthDate)) {
             return
         }
 
         // Create a user in Firebase Auth
         mAuth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
+
+                saveAdditionalInfoToDatabase()
+
                 val user = mAuth.currentUser
                 Toast.makeText(
                     this@SignUp,
@@ -128,21 +139,17 @@ class SignUp : AppCompatActivity() {
         }
     }
 
-    /**
-     * Verifies and saves additional user information in the database.
-     *
-     * @return `true` if the data is valid and successfully saved; `false` otherwise.
-     *
-     * @param emailEdit The EditText field for the user's email.
-     * @param telephone The EditText field for the user's telephone number.
-     * @param passEdit The EditText field for the user's password.
-     * @param birthDate The EditText field for the user's birth date.
-     */
-    private fun saveAdditionalInfoToDatabase(): Boolean {
-        // Para ANDRÉS: Aquí es donde tienes que aggregar la información adicional,
-        // después de verificar los datos, los agregas y haces un intent  :))
 
-        // Verify and save additional information
-        return verification.isDataValid(emailEdit, telephone, passEdit, birthDate)
+    private fun saveAdditionalInfoToDatabase() {
+
+        val userProfile = UserProfile(
+            username.text.toString(),
+            fullName.text.toString(),
+            telephone.text.toString(),
+            birthDate.text.toString()
+        )
+
+        val userProfileService = UserProfileRepository()
+        userProfileService.save(userProfile)
     }
 }

@@ -119,6 +119,12 @@
                 android:layout_weight="1"
                 android:textSize="20dp" />
         </LinearLayout>
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/show_route" />
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
