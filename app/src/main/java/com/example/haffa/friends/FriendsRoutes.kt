@@ -22,11 +22,11 @@ class FriendsRoutes : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val friend = arguments?.getSerializable("friend", Friend::class.java)
+        //val friend = arguments?.getSerializable("friend", Friend::class.java)
 
-        if (friend != null) {
-            showFriendRoutes(friend)
-        }
+        //if (friend != null) {
+            //showFriendRoutes(friend)
+        //}
     }
 
     private fun showFriendRoutes(friend: Friend) {
