@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.haffa.R
 import com.example.haffa.databinding.CardRouteBinding
 import com.example.haffa.model.Route
@@ -58,8 +59,11 @@ class RouteAdapter(private val context: Context, private var routes: List<Route>
             binding.title.text = currentRoute.name
             binding.date.text = currentRoute.localDate
 
-            Glide.with(context).load(currentRoute.imgUrl).into(binding.cardImg)
-
+            Glide.with(context)
+                .load(currentRoute.imgUrl)
+                .centerCrop()
+                .transform(CircleCrop())
+                .into(binding.cardImg)
         }
     }
 }
