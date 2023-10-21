@@ -55,6 +55,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HAFFA"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDTcNOY_S8R-fxDl-vwupvJ1e--pxw-6wk" />
+
         <activity
             android:name=".authentication.SignUp"
             android:exported="false" />
@@ -70,6 +75,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.haffa.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>
