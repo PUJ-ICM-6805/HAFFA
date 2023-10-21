@@ -215,6 +215,9 @@ class FinishRoute : Fragment() {
 
         // Verificar si el permiso está disponible
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            val newPoint = GeoPoint(lastLocation!!.latitude, lastLocation!!.longitude)
+            routePoints.add(newPoint)
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10f, locationListener)
             startTime = SystemClock.elapsedRealtime()
             lastLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
