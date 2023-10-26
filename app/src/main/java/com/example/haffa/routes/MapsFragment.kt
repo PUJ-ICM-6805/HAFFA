@@ -1,62 +1,31 @@
 package com.example.haffa.routes
 
-import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.os.Build
+import android.graphics.Paint
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.haffa.R
 import com.example.haffa.model.Route
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.CustomCap
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
-import com.google.android.gms.maps.model.RoundCap
+import org.osmdroid.api.IMapController
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.MapView
+import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Polyline
 
 class MapsFragment : Fragment() {
 
     private lateinit var route: Route
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        // Extract locations from the Route object and draw polylines
-        val circleCap = CustomCap(bitmapDescriptorFromVector(requireContext(), R.drawable.circle), 20f)
-        val polylineOptions = PolylineOptions()
-            .color(
-                ContextCompat.getColor(requireContext(), R.color.violet))
-            .width(20f)
-            .startCap(circleCap)
-            .endCap(circleCap)
-        route.locations.forEach {
-            val latLng = LatLng(it["latitude"]!!, it["longitude"]!!)
-            polylineOptions.add(latLng)
-        }
-        googleMap.addPolyline(polylineOptions)
-
-        val startLocation = route.locations.first()
-        val startLatLng = LatLng(startLocation["latitude"]!!, startLocation["longitude"]!!)
-
-
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startLatLng, 15f))
-    }
-
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            route = it.getSerializable("route", Route::class.java) as Route
-        }
+        route = arguments?.getSerializable("route") as? Route ?: return
     }
 
     override fun onCreateView(
@@ -69,8 +38,68 @@ class MapsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(callback)
+        val map = view.findViewById<MapView>(R.id.map)
+        map.setTileSource(TileSourceFactory.MAPNIK)
+        map.setMultiTouchControls(true)
+
+        val mapController: IMapController = map.controller
+        mapController.setZoom(18.0)
+
+        val geoPoints = route.locations.map {
+            GeoPoint(it["latitude"]!!, it["longitude"]!!)
+        }
+
+        if (geoPoints.isEmpty()) return
+
+        val polyline = Polyline(map)
+        polyline.setPoints(geoPoints)
+        polyline.color = ContextCompat.getColor(requireContext(), R.color.violet)
+        polyline.width = 20f
+        map.overlays.add(polyline)
+
+        val startMarker = Marker(map)
+        startMarker.position = geoPoints.first()
+        startMarker.setIcon(BitmapDrawable(resources, createStyledMarker(ContextCompat.getColor(requireContext(), R.color.red), 48)))
+        map.overlays.add(startMarker)
+
+        if (geoPoints.size > 1) {
+            val endMarker = Marker(map)
+            endMarker.position = geoPoints.last()
+            endMarker.setIcon(BitmapDrawable(resources, createStyledMarker(ContextCompat.getColor(requireContext(), R.color.red), 48)))
+            map.overlays.add(endMarker)
+        }
+
+        mapController.setCenter(geoPoints.first())
+    }
+
+    private fun createStyledMarker(color: Int, diameter: Int): Bitmap {
+        val bitmap = Bitmap.createBitmap(diameter, diameter, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val outerCirclePaint = Paint().apply {
+            this.color = color
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+        val innerCirclePaint = Paint().apply {
+            this.color = ContextCompat.getColor(requireContext(), R.color.white)
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+        val centerDotPaint = Paint().apply {
+            this.color = color
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
+
+        val outerRadius = diameter / 2f
+        val innerRadius = outerRadius * 0.7f
+        val centerDotRadius = innerRadius * 0.3f
+
+        canvas.drawCircle(outerRadius, outerRadius, outerRadius, outerCirclePaint)
+        canvas.drawCircle(outerRadius, outerRadius, innerRadius, innerCirclePaint)
+        canvas.drawCircle(outerRadius, outerRadius, centerDotRadius, centerDotPaint)
+
+        return bitmap
     }
 
     companion object {
@@ -80,14 +109,4 @@ class MapsFragment : Fragment() {
             }
         }
     }
-
-    private fun bitmapDescriptorFromVector(context: Context, vectorResId: Int): BitmapDescriptor {
-        val vectorDrawable = ContextCompat.getDrawable(context, vectorResId)
-        vectorDrawable!!.setBounds(0, 0, vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight)
-        val bitmap = Bitmap.createBitmap(vectorDrawable.intrinsicWidth, vectorDrawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        vectorDrawable.draw(canvas)
-        return BitmapDescriptorFactory.fromBitmap(bitmap)
-    }
-
 }
