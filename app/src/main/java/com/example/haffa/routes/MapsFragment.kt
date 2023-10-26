@@ -53,21 +53,21 @@ class MapsFragment : Fragment() {
 
         val polyline = Polyline(map)
         polyline.setPoints(geoPoints)
-        polyline.color = ContextCompat.getColor(requireContext(), R.color.violet)
+        polyline.color = ContextCompat.getColor(requireContext(), R.color.rose)
         polyline.width = 20f
         map.overlays.add(polyline)
 
         val startMarker = Marker(map)
         startMarker.position = geoPoints.first()
         startMarker.setIcon(BitmapDrawable(resources, createStyledMarker(ContextCompat.getColor(requireContext(), R.color.red), 48)))
-        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER) // Ajustamos el anclaje al centro
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
         map.overlays.add(startMarker)
 
         if (geoPoints.size > 1) {
             val endMarker = Marker(map)
             endMarker.position = geoPoints.last()
             endMarker.setIcon(BitmapDrawable(resources, createStyledMarker(ContextCompat.getColor(requireContext(), R.color.red), 48)))
-            endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER) // Ajustamos el anclaje al centro
+            endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
             map.overlays.add(endMarker)
         }
 
