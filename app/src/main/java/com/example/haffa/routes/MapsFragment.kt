@@ -60,12 +60,14 @@ class MapsFragment : Fragment() {
         val startMarker = Marker(map)
         startMarker.position = geoPoints.first()
         startMarker.setIcon(BitmapDrawable(resources, createStyledMarker(ContextCompat.getColor(requireContext(), R.color.red), 48)))
+        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER) // Ajustamos el anclaje al centro
         map.overlays.add(startMarker)
 
         if (geoPoints.size > 1) {
             val endMarker = Marker(map)
             endMarker.position = geoPoints.last()
             endMarker.setIcon(BitmapDrawable(resources, createStyledMarker(ContextCompat.getColor(requireContext(), R.color.red), 48)))
+            endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER) // Ajustamos el anclaje al centro
             map.overlays.add(endMarker)
         }
 
