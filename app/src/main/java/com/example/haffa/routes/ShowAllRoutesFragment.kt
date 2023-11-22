@@ -13,6 +13,18 @@ class ShowAllRoutesFragment : Fragment() {
 
     private lateinit var binding: FragmentShowAllRoutesBinding
     private lateinit var adapter: RouteAdapter
+    private lateinit var routeService: RouteService
+    private var phone: String? = null
+    private var friendName: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            phone = it.getString("PHONE")
+            friendName = it.getString("FRIEND_NAME")
+        }
+        routeService = RouteService()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,33 +37,32 @@ class ShowAllRoutesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
 
-        val recyclerView = binding.cardView
+        if (phone != null) {
+            // Handle the case when there is a specific phone number to filter by
+            binding.title.text = "Routes for $friendName"
+            loadRoutesForPhone(phone!!)
+        } else {
+            // Handle the default case where no specific phone number is specified
+            loadAllRoutes()
+        }
+    }
 
-        val layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = layoutManager
-
+    private fun setupRecyclerView() {
+        binding.cardView.layoutManager = LinearLayoutManager(requireContext())
         adapter = RouteAdapter(requireContext(), mutableListOf())
-        recyclerView.adapter = adapter
+        binding.cardView.adapter = adapter
+    }
 
-        val routeService = RouteService()
+    private fun loadAllRoutes() {
         routeService.getAll { routes ->
             adapter.updateData(routes)
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        val recyclerView = binding.cardView
-
-        val layoutManager = LinearLayoutManager(requireContext())
-        recyclerView.layoutManager = layoutManager
-
-        adapter = RouteAdapter(requireContext(), mutableListOf())
-        recyclerView.adapter = adapter
-
-        val routeService = RouteService()
-        routeService.getAll { routes ->
+    private fun loadRoutesForPhone(phone: String) {
+        routeService.getAllByPhone(phone) { routes ->
             adapter.updateData(routes)
         }
     }

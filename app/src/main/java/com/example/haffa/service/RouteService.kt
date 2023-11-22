@@ -13,4 +13,8 @@ class RouteService {
     fun getAll(callback: (List<Route>) -> Unit) {
         routeRepository.getAll(callback)
     }
+
+    fun getAllByPhone(phone: String, callback: (List<Route>) -> Unit) {
+        routeRepository.getAllByPhone(phone, callback)
+    }
 }

@@ -2,7 +2,6 @@ package com.example.haffa.routes
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.icu.text.SimpleDateFormat
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.haffa.R
 import com.example.haffa.databinding.CardRouteBinding
 import com.example.haffa.model.Route
-import java.util.Locale
 
 class RouteAdapter(private val context: Context, private var routes: List<Route>) : RecyclerView.Adapter<RouteAdapter.ViewHolder>() {
 
@@ -25,7 +23,7 @@ class RouteAdapter(private val context: Context, private var routes: List<Route>
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentRoute = routes!![position]
+        val currentRoute = routes[position]
         holder.bindData(currentRoute)
 
         holder.itemView.setOnClickListener{
@@ -44,9 +42,10 @@ class RouteAdapter(private val context: Context, private var routes: List<Route>
     }
 
     override fun getItemCount(): Int {
-        return routes!!.size
+        return routes.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun updateData(newRoutes: List<Route>) {
         this.routes = newRoutes
         notifyDataSetChanged()

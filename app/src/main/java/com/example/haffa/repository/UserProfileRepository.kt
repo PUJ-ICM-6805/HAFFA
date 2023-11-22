@@ -21,4 +21,35 @@ class UserProfileRepository {
                 Log.w("FirestoreRepository", "Error writing document", e)
             }
     }
+
+    fun getAllProfiles(callback: (List<UserProfile>) -> Unit) {
+        db.collection("users")
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w("FirestoreRepository", "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+
+                val profiles = mutableListOf<UserProfile>()
+                for (document in snapshot!!) {
+                    if (document.id != mAuth.currentUser!!.uid)
+                        profiles.add(document.toObject(UserProfile::class.java))
+                }
+                callback(profiles) // Calling back with the updated list
+            }
+    }
+
+    fun getUserIdByUserPhone(phone: String, callback: (String) -> Unit) {
+        db.collection("users")
+            .whereEqualTo("telephone", phone)
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    callback(document.id)
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w("FirestoreRepository", "Error getting documents.", exception)
+            }
+    }
 }

@@ -1,59 +1,54 @@
 package com.example.haffa.friends
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.database.Cursor
-import android.net.Uri
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CursorAdapter
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.BaseAdapter
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.haffa.R
 import com.example.haffa.databinding.CardFriendBinding
+import com.example.haffa.model.UserProfile
+import com.example.haffa.routes.ShowAllRoutesFragment
 
-class FriendAdapter(context: Context, cursor: Cursor?) : CursorAdapter(context, cursor, 0) {
+class FriendAdapter(
+    private val context: Context,
+    private val userProfiles: List<UserProfile>
+) : BaseAdapter() {
 
-    override fun newView(context: Context, cursor: Cursor, parent: ViewGroup?): View {
-        val binding = CardFriendBinding.inflate(LayoutInflater.from(context), parent, false)
-        return binding.root
-    }
+    override fun getCount(): Int = userProfiles.size
 
-    @SuppressLint("Range", "Recycle")
-    override fun bindView(view: View?, context: Context?, cursor: Cursor?) {
-        val binding = CardFriendBinding.bind(view!!)
+    override fun getItem(position: Int): Any = userProfiles[position]
 
-        // Nombre del contacto
-        val contactNameText: TextView = binding.name
-        contactNameText.text = cursor!!.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY))
+    override fun getItemId(position: Int): Long = position.toLong()
 
-        // Teléfono principal del contacto
-        val contactId = cursor.getInt(0)
-        val phoneCursor = context!!.contentResolver.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?", arrayOf(contactId.toString()), null)
-        if (phoneCursor != null && phoneCursor.moveToFirst()) {
-            val phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
-            val contactPhoneText: TextView = binding.phone
-            contactPhoneText.text = phoneNumber
-            phoneCursor.close()
-        }
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
-        // Avatar del contacto si lo tiene, si no, avatar por defecto
-        val contactPhotoImageView: ImageView = binding.cardImg
-        val photoUri = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.PHOTO_URI))
-        if (photoUri != null) {
-            contactPhotoImageView.setImageURI(Uri.parse(photoUri))
-            Glide.with(context).load(photoUri).transform(CircleCrop()).into(contactPhotoImageView)
+        val binding: CardFriendBinding = if (convertView == null) {
+            CardFriendBinding.inflate(LayoutInflater.from(context), parent, false)
         } else {
-            // Si no hay foto de avatar, podemos mostrar una imagen predeterminada
-            contactPhotoImageView.setImageResource(R.drawable.img_default_avatar)
+            CardFriendBinding.bind(convertView)
         }
 
+        val userProfile = getItem(position) as UserProfile
+        binding.name.text = userProfile.fullName
+        binding.phone.text = userProfile.telephone
+        binding.user.text = userProfile.username
+
+        binding.root.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putSerializable("PHONE", userProfile.telephone)
+            bundle.putSerializable("FRIEND_NAME", userProfile.username)
+            val fragmentTransaction = (binding.root.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            val newFragment = ShowAllRoutesFragment()
+            newFragment.arguments = bundle
+            fragmentTransaction.replace(R.id.frame_container, newFragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+            true
+        }
+
+        return binding.root
     }
 }

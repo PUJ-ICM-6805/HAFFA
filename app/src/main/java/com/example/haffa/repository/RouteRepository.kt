@@ -9,6 +9,7 @@ import com.google.firebase.ktx.Firebase
 class RouteRepository {
     val db = FirebaseFirestore.getInstance()
     val mAuth = Firebase.auth
+    val userProfileRepository = UserProfileRepository()
 
     fun save(route: Route) {
         val uid = mAuth.currentUser!!.uid
@@ -27,20 +28,42 @@ class RouteRepository {
 
     fun getAll(callback: (List<Route>) -> Unit) {
         val uid = mAuth.currentUser!!.uid
-        val routes = mutableListOf<Route>()
 
         db.collection("routes").document(uid)
             .collection("userRoutes")
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.w("FirestoreRepository", "Listen failed.", e)
+                    return@addSnapshotListener
+                }
+
+                val routes = mutableListOf<Route>()
+                for (document in snapshot!!) {
                     routes.add(document.toObject(Route::class.java))
                 }
-                callback(routes)  // Calling back with the populated list
+                callback(routes) // Calling back with the updated list
             }
-            .addOnFailureListener { exception ->
-                Log.w("FirestoreRepository", "Error getting documents.", exception)
-            }
+    }
+
+
+    fun getAllByPhone(phone: String, callback: (List<Route>) -> Unit) {
+
+        userProfileRepository.getUserIdByUserPhone(phone) { userId ->
+            db.collection("routes").document(userId)
+                .collection("userRoutes")
+                .addSnapshotListener { snapshot, e ->
+                    if (e != null) {
+                        Log.w("FirestoreRepository", "Listen failed.", e)
+                        return@addSnapshotListener
+                    }
+
+                    val routes = mutableListOf<Route>()
+                    for (document in snapshot!!) {
+                        routes.add(document.toObject(Route::class.java))
+                    }
+                    callback(routes)  // Calling back with the updated list
+                }
+        }
     }
 
 }

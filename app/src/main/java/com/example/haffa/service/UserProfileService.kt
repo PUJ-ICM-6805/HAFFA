@@ -9,4 +9,8 @@ class UserProfileService {
     fun save(userProfile: UserProfile) {
         userProfileRepository.save(userProfile)
     }
+
+    fun getAllProfiles(callback: (List<UserProfile>) -> Unit) {
+        userProfileRepository.getAllProfiles(callback)
+    }
 }

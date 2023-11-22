@@ -13,5 +13,6 @@
     <string name="default_web_client_id">1046984218662-3lmn9fde7lgodrffjtbns3uu43k1ujrj.apps.googleusercontent.com</string>
     <string name="permission_rationale_location">La aplicación necesita acceder a tu ubicación para registrar tu proceso</string>
     <string name="show_route">Show route</string>
+    <string name="my_routes">My Routes</string>
 
 </resources>
