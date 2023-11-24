@@ -15,8 +15,6 @@ class UserLocationRepository {
         val uid = mAuth.currentUser!!.uid
 
         db.collection("locations").document(uid)
-            .collection("userLocations")
-            .document(uid)
             .set(location)
             .addOnSuccessListener {
                 Log.d("FirestoreRepository", "DocumentSnapshot successfully written!")
@@ -31,17 +29,16 @@ class UserLocationRepository {
         userProfileRepository.getUserIdByUserPhone(phone) { userId ->
             db.collection("locations")
                 .document(userId)
-                .collection("userLocations")
                 .addSnapshotListener { snapshot, e ->
                     if (e != null) {
                         Log.w("FirestoreRepository", "Listen failed.", e)
                         return@addSnapshotListener
                     }
-                    for (document in snapshot!!) {
-                        val location = document.toObject(CustomLocation::class.java)
-                        callback(location) // Calling back with the updated list
-                    }
 
+                    val location = snapshot!!.toObject(CustomLocation::class.java)
+                    if (location != null) {
+                        callback(location)
+                    }
                 }
         }
 
