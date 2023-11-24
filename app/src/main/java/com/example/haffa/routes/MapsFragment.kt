@@ -62,6 +62,7 @@ class MapsFragment : Fragment() {
     private fun displayFriendLocation() {
         val UserLocationService = UserLocationService()
         UserLocationService.getByPhone(friendPhone!!) { location ->
+            map.overlays.clear()
             val geoPoint = GeoPoint(location.latitude, location.longitude)
 
             val marker = Marker(map)
