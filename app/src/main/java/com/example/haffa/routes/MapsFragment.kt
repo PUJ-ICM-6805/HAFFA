@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.haffa.R
 import com.example.haffa.model.Route
+import com.example.haffa.service.UserLocationService
 import org.osmdroid.api.IMapController
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
@@ -21,11 +22,17 @@ import org.osmdroid.views.overlay.Polyline
 
 class MapsFragment : Fragment() {
 
-    private lateinit var route: Route
+    private var route: Route? = null
+    private var friendPhone: String? = null
+    private var friendName: String? = null
+    private lateinit var map: MapView
+    private lateinit var mapController: IMapController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        route = arguments?.getSerializable("route") as? Route ?: return
+        route = arguments?.getSerializable("route") as? Route
+        friendPhone = arguments?.getString("PHONE")
+        friendName = arguments?.getString("FRIEND_NAME")
     }
 
     override fun onCreateView(
@@ -38,14 +45,41 @@ class MapsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val map = view.findViewById<MapView>(R.id.map)
+        map = view.findViewById(R.id.map)
         map.setTileSource(TileSourceFactory.MAPNIK)
         map.setMultiTouchControls(true)
 
-        val mapController: IMapController = map.controller
+        mapController = map.controller
         mapController.setZoom(18.0)
 
-        val geoPoints = route.locations.map {
+        if (route != null) {
+            displayRoute()
+        } else if (friendPhone != null) {
+            displayFriendLocation()
+        }
+    }
+
+    private fun displayFriendLocation() {
+        val UserLocationService = UserLocationService()
+        UserLocationService.getByPhone(friendPhone!!) { location ->
+            val geoPoint = GeoPoint(location.latitude, location.longitude)
+
+            val marker = Marker(map)
+            marker.position = geoPoint
+            marker.icon = BitmapDrawable(
+                resources,
+                createStyledMarker(ContextCompat.getColor(requireContext(), R.color.red), 48)
+            )
+            marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
+            marker.title = friendName
+            map.overlays.add(marker)
+
+            mapController.setCenter(geoPoint)
+        }
+    }
+
+    private fun displayRoute() {
+        val geoPoints = route!!.locations.map {
             GeoPoint(it["latitude"]!!, it["longitude"]!!)
         }
 
@@ -59,14 +93,20 @@ class MapsFragment : Fragment() {
 
         val startMarker = Marker(map)
         startMarker.position = geoPoints.first()
-        startMarker.setIcon(BitmapDrawable(resources, createStyledMarker(ContextCompat.getColor(requireContext(), R.color.red), 48)))
+        startMarker.icon = BitmapDrawable(
+            resources,
+            createStyledMarker(ContextCompat.getColor(requireContext(), R.color.red), 48)
+        )
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
         map.overlays.add(startMarker)
 
         if (geoPoints.size > 1) {
             val endMarker = Marker(map)
             endMarker.position = geoPoints.last()
-            endMarker.setIcon(BitmapDrawable(resources, createStyledMarker(ContextCompat.getColor(requireContext(), R.color.red), 48)))
+            endMarker.icon = BitmapDrawable(
+                resources,
+                createStyledMarker(ContextCompat.getColor(requireContext(), R.color.red), 48)
+            )
             endMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_CENTER)
             map.overlays.add(endMarker)
         }
@@ -102,13 +142,5 @@ class MapsFragment : Fragment() {
         canvas.drawCircle(outerRadius, outerRadius, centerDotRadius, centerDotPaint)
 
         return bitmap
-    }
-
-    companion object {
-        fun newInstance(route: Route) = MapsFragment().apply {
-            arguments = Bundle().apply {
-                putSerializable("route", route)
-            }
-        }
     }
 }

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.haffa.R
 import com.example.haffa.databinding.CardFriendBinding
 import com.example.haffa.model.UserProfile
+import com.example.haffa.routes.MapsFragment
 import com.example.haffa.routes.ShowAllRoutesFragment
 
 class FriendAdapter(
@@ -36,12 +37,25 @@ class FriendAdapter(
         binding.phone.text = userProfile.telephone
         binding.user.text = userProfile.username
 
-        binding.root.setOnClickListener {
+        binding.routes.setOnClickListener {
             val bundle = Bundle()
             bundle.putSerializable("PHONE", userProfile.telephone)
             bundle.putSerializable("FRIEND_NAME", userProfile.username)
             val fragmentTransaction = (binding.root.context as AppCompatActivity).supportFragmentManager.beginTransaction()
             val newFragment = ShowAllRoutesFragment()
+            newFragment.arguments = bundle
+            fragmentTransaction.replace(R.id.frame_container, newFragment)
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
+            true
+        }
+
+        binding.location.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("PHONE", userProfile.telephone)
+            bundle.putString("FRIEND_NAME", userProfile.username)
+            val fragmentTransaction = (binding.root.context as AppCompatActivity).supportFragmentManager.beginTransaction()
+            val newFragment = MapsFragment()
             newFragment.arguments = bundle
             fragmentTransaction.replace(R.id.frame_container, newFragment)
             fragmentTransaction.addToBackStack(null)
