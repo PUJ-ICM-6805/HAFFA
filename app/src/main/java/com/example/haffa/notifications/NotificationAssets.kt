@@ -37,7 +37,7 @@ class NotificationAssets(private val context: Context) {
         notificationManager.createNotificationChannel(channel)
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+
     fun showNotification(id: Int, topic: String, importance: Int, description: String, context: Context) {
         if (ActivityCompat.checkSelfPermission(
                 context,
@@ -66,8 +66,8 @@ class NotificationAssets(private val context: Context) {
     ) {
         val builder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_logo_haffa)
-            .setContentTitle("Notification Title")
-            .setContentText("Notification Text")
+            .setContentTitle(topic)
+            .setContentText(description)
             .setPriority(importance)
 
         val notificationManager = NotificationManagerCompat.from(context)
