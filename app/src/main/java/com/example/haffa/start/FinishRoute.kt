@@ -12,6 +12,7 @@ import android.icu.text.SimpleDateFormat
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
@@ -20,8 +21,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import com.example.haffa.R
 import com.example.haffa.databinding.FragmentFinishRouteBinding
+import com.example.haffa.notifications.NotificationAssets
 import com.example.haffa.utils.PermissionManager
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -65,9 +68,21 @@ class FinishRoute : Fragment() {
     private lateinit var myLocationOverlay: MyLocationNewOverlay
 
     private val locationListener = object : LocationListener {
+
         override fun onLocationChanged(location: Location) {
             if (lastLocation != null) {
                 distanceTraveled += lastLocation!!.distanceTo(location)
+                if (distanceTraveled>currentMaxDistance){
+                    notificationAssets.showNotification(
+                        1,
+                        "Nuevo Rércord",
+                        1,
+                        "¡Vamos! Has recorrido más de $currentMaxDistance metros",
+                        requireContext()
+                    )
+                    currentMaxDistance*=10
+                }
+
             }
             lastLocation = location
             val newPoint = GeoPoint(location.latitude, location.longitude)
@@ -115,10 +130,15 @@ class FinishRoute : Fragment() {
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
     }
 
+    private lateinit var notificationAssets: NotificationAssets
+
+    private var currentMaxDistance = 10
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        notificationAssets = NotificationAssets(requireContext())
         binding = FragmentFinishRouteBinding.inflate(inflater, container, false)
         val view = binding.root
 
