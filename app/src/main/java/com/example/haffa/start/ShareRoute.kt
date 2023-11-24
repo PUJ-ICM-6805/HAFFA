@@ -20,9 +20,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import com.android.volley.Request
-import com.android.volley.toolbox.JsonObjectRequest
-import com.android.volley.toolbox.Volley
 import com.example.haffa.R
 import com.example.haffa.databinding.FragmentShareRouteBinding
 import com.example.haffa.model.Route
@@ -34,7 +31,12 @@ import java.io.IOException
 import java.text.DateFormat
 import java.time.LocalDate
 import java.util.Date
-
+import com.android.volley.Request
+import com.android.volley.Response
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import org.json.JSONException
 
 
 class ShareRoute : Fragment() {
@@ -86,6 +88,20 @@ class ShareRoute : Fragment() {
 
         // Configurar el texto en tvData
         binding.tvData.text = dataText
+
+        // Llamada a calculateDistance si tienes polylineData
+        polylineData?.let {
+            if (it.size >= 2) {
+                val startCoordinate = it[0]
+                val endCoordinate = it[it.size - 1]
+                calculateDistance(
+                    startCoordinate.latitude,
+                    startCoordinate.longitude,
+                    endCoordinate.latitude,
+                    endCoordinate.longitude
+                )
+            }
+        }
 
         // Configurar un OnClickListener para el botón
         buttonbShareRoute.setOnClickListener {
@@ -180,23 +196,40 @@ class ShareRoute : Fragment() {
     }
 
     private fun calculateDistance(startLat: Double, startLon: Double, endLat: Double, endLon: Double) {
+        if (startLat.isNaN() || startLon.isNaN() || endLat.isNaN() || endLon.isNaN()) {
+            Log.e("CalculateDistance", "Invalid coordinates")
+            return
+        }
+
         val url = "https://graphhopper.com/api/1/route?" +
                 "point=$startLat,$startLon&point=$endLat,$endLon&" +
-                "vehicle=car&locale=es&key=07264c7c-0594-4c67-a4e8-e744c44fe306"
+                "vehicle=car&locale=es&key=07264c7c-0594-4c67-a4e8-e744c44fe306"  // Reemplaza con tu clave API
 
         val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
             { response ->
-                val paths = response.getJSONArray("paths")
-                val path = paths.getJSONObject(0)
-                val distance = path.getDouble("distance")
-                updateDistanceUI(distance)
+                try {
+                    val paths = response.getJSONArray("paths")
+                    val path = paths.getJSONObject(0)
+                    val distance = path.getDouble("distance")
+
+                    // Actualizar la distancia
+                    distanceTraveled = distance.toFloat()
+
+                    // Actualizar la UI
+                    updateDistanceUI()
+                } catch (e: JSONException) {
+                    Log.e("CalculateDistance", "Error parsing the JSON response", e)
+                }
             },
             { error ->
-                Log.e("Volley", "Error: ${error.message}")
-            })
+                Log.e("CalculateDistance", "Error: ${error.message}")
+            }
+        )
 
         Volley.newRequestQueue(context).add(jsonObjectRequest)
     }
+
+
 
     private fun saveRouteToDatabase(
         routeName: String,
@@ -347,20 +380,21 @@ class ShareRoute : Fragment() {
             .show()
     }
 
-    private fun updateDistanceUI(distance: Double) {
-        this.distanceTraveled = distance.toFloat()
-        val dataText = """
-            Distancia: ${distance}m
-            Altura máxima: ${maxAltitudeMeters}m
-            Altura mínima: ${minAltitudeMeters}m
-            Aceleración promedio: ${averageAccelerationMS2}m/s²
-            Calificación obtenida: 0
-            Duración: ${elapsedTimeSeconds}s
-            Fecha de la ruta: $currentDateTime
+    private fun updateDistanceUI() {
+        // Actualizar la interfaz de usuario con la nueva distancia
+        activity?.runOnUiThread {
+            binding.tvData.text = """
+                Distancia: ${distanceTraveled}m
+                Altura máxima: ${maxAltitudeMeters}m
+                Altura mínima: ${minAltitudeMeters}m
+                Aceleración promedio: ${averageAccelerationMS2}m/s²
+                Calificación obtenida: 0
+                Duración: ${elapsedTimeSeconds}s
+                Fecha de la ruta: $currentDateTime
             """.trimIndent()
-
-        binding.tvData.text = dataText
+        }
     }
+
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
