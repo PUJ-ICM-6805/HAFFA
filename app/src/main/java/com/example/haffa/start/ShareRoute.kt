@@ -20,6 +20,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.android.volley.Request
+import com.android.volley.toolbox.JsonObjectRequest
+import com.android.volley.toolbox.Volley
 import com.example.haffa.R
 import com.example.haffa.databinding.FragmentShareRouteBinding
 import com.example.haffa.model.Route
@@ -31,6 +34,8 @@ import java.io.IOException
 import java.text.DateFormat
 import java.time.LocalDate
 import java.util.Date
+
+
 
 class ShareRoute : Fragment() {
     private lateinit var binding: FragmentShareRouteBinding
@@ -59,12 +64,9 @@ class ShareRoute : Fragment() {
         binding = FragmentShareRouteBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        // Obtener una referencia al botón bStartRoute usando View Binding
         val buttonbShareRoute = binding.bShareRoute
 
-        // Recuperar datos del Bundle
         arguments?.let {
-            distanceTraveled = it.getFloat("distanceTraveled")
             elapsedTimeSeconds = it.getLong("elapsedTimeSeconds")
             minAltitudeMeters = it.getFloat("minAltitudeMeters")
             maxAltitudeMeters = it.getFloat("maxAltitudeMeters")
@@ -72,7 +74,6 @@ class ShareRoute : Fragment() {
             currentDateTime = it.getString("currentDateTime", "")
             polylineData = it.getSerializable("polylineData") as? List<GeoPoint>
         }
-
         // Construir la cadena de texto con los datos
         val dataText = """
         Distancia: ${distanceTraveled}m
@@ -112,10 +113,20 @@ class ShareRoute : Fragment() {
                     Toast.LENGTH_SHORT
                 ).show()
 
-
                 val routeName = binding.editText.text.toString()
-                // Se sube la imagen a Firebase Storage
-                var downloadImageUri: Uri? = null
+                // Call calculateDistance if you have polylineData
+                polylineData?.let {
+                    if (it.size >= 2) {
+                        val startCoordinate = it[0]
+                        val endCoordinate = it[it.size - 1]
+                        calculateDistance(
+                            startCoordinate.latitude,
+                            startCoordinate.longitude,
+                            endCoordinate.latitude,
+                            endCoordinate.longitude
+                        )
+                    }
+                }
 
                 val imageService = ImageService()
                 imageService.upload(localImageUri!!) { downloadImageUri ->
@@ -131,24 +142,23 @@ class ShareRoute : Fragment() {
                     )
                 }
 
-
-                // Crear una instancia del fragmento de destino (FinishRoute)
+                // Create an instance of the destination fragment (StartRoute)
                 val startRouteFragment = StartRoute()
 
-                // Obtener el FragmentManager
+                // Get the FragmentManager
                 val fragmentManager = parentFragmentManager
 
-                // Iniciar la transacción de fragmento para reemplazar StartRoute con FinishRoute
+                // Start the fragment transaction to replace StartRoute with FinishRoute
                 fragmentManager.beginTransaction()
                     .replace(
                         R.id.frame_container,
                         startRouteFragment
                     )
-                    .addToBackStack(null) // Agregar a la pila de retroceso
+                    .addToBackStack(null) // Add to the back stack
                     .commit()
             }
-
         }
+
 
         binding.buttomCamera.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
@@ -167,6 +177,25 @@ class ShareRoute : Fragment() {
         }
 
         return view
+    }
+
+    private fun calculateDistance(startLat: Double, startLon: Double, endLat: Double, endLon: Double) {
+        val url = "https://graphhopper.com/api/1/route?" +
+                "point=$startLat,$startLon&point=$endLat,$endLon&" +
+                "vehicle=car&locale=es&key=07264c7c-0594-4c67-a4e8-e744c44fe306"
+
+        val jsonObjectRequest = JsonObjectRequest(Request.Method.GET, url, null,
+            { response ->
+                val paths = response.getJSONArray("paths")
+                val path = paths.getJSONObject(0)
+                val distance = path.getDouble("distance")
+                updateDistanceUI(distance)
+            },
+            { error ->
+                Log.e("Volley", "Error: ${error.message}")
+            })
+
+        Volley.newRequestQueue(context).add(jsonObjectRequest)
     }
 
     private fun saveRouteToDatabase(
@@ -316,6 +345,21 @@ class ShareRoute : Fragment() {
             .setNegativeButton("Cancel", null)
             .create()
             .show()
+    }
+
+    private fun updateDistanceUI(distance: Double) {
+        this.distanceTraveled = distance.toFloat()
+        val dataText = """
+            Distancia: ${distance}m
+            Altura máxima: ${maxAltitudeMeters}m
+            Altura mínima: ${minAltitudeMeters}m
+            Aceleración promedio: ${averageAccelerationMS2}m/s²
+            Calificación obtenida: 0
+            Duración: ${elapsedTimeSeconds}s
+            Fecha de la ruta: $currentDateTime
+            """.trimIndent()
+
+        binding.tvData.text = dataText
     }
 
 
