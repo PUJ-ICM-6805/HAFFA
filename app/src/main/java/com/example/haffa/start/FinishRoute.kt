@@ -22,6 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.haffa.R
 import com.example.haffa.databinding.FragmentFinishRouteBinding
+import com.example.haffa.notifications.NotificationAssets
 import com.example.haffa.utils.PermissionManager
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -68,6 +69,11 @@ class FinishRoute : Fragment() {
         override fun onLocationChanged(location: Location) {
             if (lastLocation != null) {
                 distanceTraveled += lastLocation!!.distanceTo(location)
+                if (distanceTraveled>20){
+                    Log.d("Pruebas", "Distancia recorrida: $distanceTraveled metros")
+                    notificationAssets.showNotification(12,"Adiós",1,"sÍ",requireContext())
+                }
+
             }
             lastLocation = location
             val newPoint = GeoPoint(location.latitude, location.longitude)
@@ -115,10 +121,13 @@ class FinishRoute : Fragment() {
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
     }
 
+    private lateinit var notificationAssets: NotificationAssets
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        notificationAssets = NotificationAssets(requireContext())
         binding = FragmentFinishRouteBinding.inflate(inflater, container, false)
         val view = binding.root
 
