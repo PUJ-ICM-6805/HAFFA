@@ -381,6 +381,7 @@ class ShareRoute : Fragment() {
     }
 
     private fun updateDistanceUI() {
+        val points = (distanceTraveled.toInt() / 10 + (maxAltitudeMeters - minAltitudeMeters).toInt() / 10 + elapsedTimeSeconds.toInt() / 10).toInt()
         // Actualizar la interfaz de usuario con la nueva distancia
         activity?.runOnUiThread {
             binding.tvData.text = """
@@ -388,7 +389,7 @@ class ShareRoute : Fragment() {
                 Altura máxima: ${maxAltitudeMeters}m
                 Altura mínima: ${minAltitudeMeters}m
                 Aceleración promedio: ${averageAccelerationMS2}m/s²
-                Calificación obtenida: 0
+                Calificación obtenida: $points
                 Duración: ${elapsedTimeSeconds}s
                 Fecha de la ruta: $currentDateTime
             """.trimIndent()
